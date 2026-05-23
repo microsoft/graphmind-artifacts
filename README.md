@@ -93,4 +93,4 @@ taxonomy = extract_taxonomy_from_dict(incident, domain="CloudDw")
 
 ## License
 
-MIT — see [`LICENSE`](LICENSE).
+Community Data License Agreement — see [`LICENSE`](LICENSE).
