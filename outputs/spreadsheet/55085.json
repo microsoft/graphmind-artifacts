@@ -1,0 +1,22 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return an intersecting value from a 2D table using one row criterion and multiple header criteria (multi-row header) to select the correct column",
+        "Action: INDEX with two MATCH functions; second MATCH searches a concatenated multi-row header array to find the target column",
+        "Observation: When column headers are split across multiple rows (e.g., item + period + metric), concatenating those header rows creates a unique composite key that MATCH can locate",
+        "Resolution: =INDEX([data_2D_range], MATCH([row_criteria], [row_key_range], 0), MATCH([header_part1]&[header_part2]&[header_part3], [header_row1_range]&[header_row2_range]&[header_row3_range], 0))"
+      ]
+    },
+    {
+      "path": [
+        "Problem: Build a dynamic lookup key from fixed text plus user-selected filters to retrieve the correct metric column",
+        "Action: Concatenate literal text with filter cells to form the lookup value used by MATCH",
+        "Observation: If the source table’s header labels follow a consistent naming pattern, constructing the same pattern from filters avoids hardcoding column positions and supports copy-across",
+        "Resolution: =INDEX([data_2D_range], MATCH([row_criteria], [row_key_range], 0), MATCH([fixed_text]&[filter1]&[fixed_text2], [composite_header_range], 0))"
+      ]
+    }
+  ],
+  "id": "55085"
+}

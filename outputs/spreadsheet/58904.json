@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Sum numeric portions of alphanumeric cells across a 2D range, grouped by a category letter embedded in each cell",
+        "Action: Array SUM(IF()) with text parsing (LEFT to match category, MID+VALUE to extract number)",
+        "Observation: Works when each cell begins with a single category letter followed by digits; non-matching cells are excluded by the IF filter",
+        "Resolution: =SUM(IF(LEFT([range],1)=[category_letter],VALUE(MID([range],2,99))))"
+      ]
+    }
+  ],
+  "id": "58904"
+}

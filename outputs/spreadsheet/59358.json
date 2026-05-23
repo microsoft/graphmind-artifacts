@@ -1,0 +1,14 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Find the first row where multiple column criteria are simultaneously met and return a value from another column in that same row",
+        "Action: Use INDEX to return from a result range and MATCH to locate the first row where a boolean product of criteria equals 1 (array criteria match)",
+        "Observation: Multiplying logical tests coerces TRUE/FALSE to 1/0, so MATCH(1, ...) returns the first row where all criteria are TRUE; optional text coercion (e.g., &\"\") resolves number-vs-text mismatches",
+        "Resolution: =INDEX([return_range],MATCH(1,([criteria_range1]=[criteria1]&\"\")*([criteria_range2]=[criteria2]),0))"
+      ]
+    }
+  ],
+  "id": "59358"
+}

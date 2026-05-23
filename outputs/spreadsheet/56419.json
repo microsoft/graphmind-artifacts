@@ -1,0 +1,30 @@
+{
+  "domain": "array_formula",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return a spill-down list of labels associated with non-zero numeric values (filter rows by condition) without helper columns",
+        "Action: Use INDEX to return the nth matching item, with AGGREGATE(SMALL) to compute the nth qualifying row number, wrapped in IFERROR for blank-on-exhaustion",
+        "Observation: Converting qualifying rows into their row numbers and dividing by a Boolean mask creates errors for non-matches; AGGREGATE with option 6 ignores errors and returns the kth smallest qualifying row index",
+        "Resolution: IFERROR(INDEX([return_range],AGGREGATE(15,6,ROW([criteria_range])/([criteria_range]<>0),ROWS([first_output_cell]:[current_output_cell]))),\"\")"
+      ]
+    },
+    {
+      "path": [
+        "Problem: Add error handling so the output remains blank once all qualifying items are returned",
+        "Action: Wrap the extraction formula in IFERROR",
+        "Observation: When k exceeds the count of qualifying rows, AGGREGATE/INDEX returns an error that can be safely converted to an empty string",
+        "Resolution: IFERROR([extraction_formula],\"\")"
+      ]
+    },
+    {
+      "path": [
+        "Problem: Change background color of returned (non-blank) results to a specific fill color",
+        "Action: Apply Conditional Formatting using a non-blank formula test and set fill color to #92D050",
+        "Observation: Conditional formatting can key off the displayed result; testing for non-empty avoids coloring unused rows",
+        "Resolution: ConditionalFormattingFormula: =LEN([top_output_cell])>0 ; FormatFillColor: #92D050"
+      ]
+    }
+  ],
+  "id": "56419"
+}

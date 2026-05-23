@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Flag each row as having a unique vs repeated combination of two key fields",
+        "Action: COUNTIFS to count occurrences of the current row’s two-field key, wrapped in IF to return a label",
+        "Observation: Counting matches across both columns identifies duplicates of the combined key; a count > 1 indicates the key appears multiple times",
+        "Resolution: IF(COUNTIFS([KeyCol1Range],[KeyCol1Value],[KeyCol2Range],[KeyCol2Value])>1,\"Multiple\",\"Single\")"
+      ]
+    }
+  ],
+  "id": "3002"
+}

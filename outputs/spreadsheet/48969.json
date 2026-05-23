@@ -1,0 +1,14 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Compare two cross-tab (matrix) data sources by matching both row keys and column headers, and return whether the intersecting values are equal",
+        "Action: Use INDEX with two MATCH functions (row MATCH on key column, column MATCH on header row) to retrieve each matrix value; wrap each retrieval in IFERROR; compare results with IF",
+        "Observation: Two-way lookup (row+column) reliably aligns values across separate tables even when column sets differ; IFERROR prevents #N/A from breaking the comparison when a key/header is missing",
+        "Resolution: IF(IFERROR(INDEX([matrix1_values],MATCH([row_key],[matrix1_row_keys],0),MATCH([col_header],[matrix1_headers],0)),\"\")=IFERROR(INDEX([matrix2_values],MATCH([row_key],[matrix2_row_keys],0),MATCH([col_header],[matrix2_headers],0)),\"\"),TRUE,FALSE)"
+      ]
+    }
+  ],
+  "id": "48969"
+}

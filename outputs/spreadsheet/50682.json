@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Sum values from a parallel range wherever a matching key appears across a multi-column matrix",
+        "Action: SUMIF using a 2D criteria range paired with a same-sized 2D sum range",
+        "Observation: When the criteria range and sum range have identical dimensions and alignment, SUMIF evaluates all cells in the criteria range and sums the corresponding cells from the sum range (e.g., part numbers in one set of columns, quantities in the adjacent set)",
+        "Resolution: =SUMIF([criteria_matrix],[lookup_key],[sum_matrix])"
+      ]
+    }
+  ],
+  "id": "50682"
+}

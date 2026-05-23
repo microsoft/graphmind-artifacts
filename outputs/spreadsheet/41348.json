@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Flag every row belonging to a group when any row in that group meets a condition, with an override for unlinked/blank groups",
+        "Action: Nested IF with COUNTIFS to test existence of at least one qualifying row within the same group key",
+        "Observation: COUNTIFS returns a positive count if any record shares the same group identifier and matches the target attribute; wrapping with IF handles exceptions like unlinked groups",
+        "Resolution: IF([link_flag_cell]=\"N\",\"N\",IF(COUNTIFS([group_id_range],[group_id_cell],[attribute_range],[target_attribute])>0,\"Y\",\"N\"))"
+      ]
+    }
+  ],
+  "id": "41348"
+}

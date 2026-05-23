@@ -1,0 +1,14 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Identify the column header corresponding to the maximum value within a single row range",
+        "Action: Use MAX to find the largest value, MATCH to locate its position within the row, and INDEX to return the header at that position",
+        "Observation: This works when headers are aligned with the data columns and you want the first header returned in case of ties (MATCH with 0 returns first exact match)",
+        "Resolution: INDEX([header_row_range], MATCH(MAX([data_row_range]), [data_row_range], 0))"
+      ]
+    }
+  ],
+  "id": "59196"
+}

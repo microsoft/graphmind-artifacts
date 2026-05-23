@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return the header(s) corresponding to the smallest positive value in a row, concatenating ties with a delimiter",
+        "Action: Use MIN with an IF filter to find the minimum value meeting a condition, then IF to flag matching positions, then TEXTJOIN to concatenate matching headers",
+        "Observation: Filtering the row to values > 0 before MIN ignores blanks/zeros; comparing the row to that minimum identifies all tied minima; TEXTJOIN can skip empty strings to return only matching headers",
+        "Resolution: =TEXTJOIN(\",\",TRUE,IF([row_values]=MIN(IF([row_values]>0,[row_values])),[header_row],\"\"))"
+      ]
+    }
+  ],
+  "id": "44389"
+}

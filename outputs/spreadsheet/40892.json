@@ -1,0 +1,14 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Extract a keyword from a text cell by matching against a predefined list and return the matched list item (or blank if none).",
+        "Action: Use SEARCH over a list to find substring positions, then LOOKUP to return the last/maximum match; wrap with IFERROR for blank when no match.",
+        "Observation: SEARCH returns numbers for found substrings and errors otherwise; LOOKUP with a large lookup_value (e.g., 99999) returns the last numeric result, enabling retrieval of a matched list item without helper columns.",
+        "Resolution: =IFERROR(LOOKUP([big_number],SEARCH([list_range],[text_cell]),[list_range]),\"\")"
+      ]
+    }
+  ],
+  "id": "40892"
+}

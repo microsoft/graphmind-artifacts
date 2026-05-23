@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Flag the most recent timestamp within each group defined by one or more criteria",
+        "Action: Use an array MAX(IF()) to compute the group-wise maximum, then IF() to label current row as latest vs not latest",
+        "Observation: MAX(IF(criteria_range=criteria_value, timestamp_range)) returns the latest timestamp for the matching group; comparing it to the current row’s timestamp enables row-level classification (requires array entry in Excel 2013)",
+        "Resolution: IF( MAX( IF( ([criteria_range1]=[criteria1])*([criteria_range2]=[criteria2])*..., [timestamp_range] ) ) = [current_timestamp], \"Latest\", \"Not Latest\" )"
+      ]
+    }
+  ],
+  "id": "58723"
+}

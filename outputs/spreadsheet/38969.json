@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return a status label based on whether an upstream cell contains an error and on numeric threshold bands",
+        "Action: Nested IF with ISERROR plus AND comparisons for numeric range checks",
+        "Observation: Test for error conditions first to avoid evaluating downstream logic; then branch by inclusive range vs greater-than thresholds",
+        "Resolution: =IF(ISERROR([error_check_cell]),\"Upload\",IF(AND([diff_cell]>=-[tolerance],[diff_cell]<=[tolerance]),\"Do not Upload\",IF([diff_cell]>[tolerance],\"to Check\",\"\")))"
+      ]
+    }
+  ],
+  "id": "38969"
+}

@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Sum values across a row/columns only for periods that are on/after a threshold period (e.g., future weeks from the current week)",
+        "Action: Use SUMIF to conditionally aggregate a value range based on a parallel header/criteria range",
+        "Observation: When the criteria (week numbers/dates) are stored in a single header row aligned with the values to sum, SUMIF can replace many repeated IF additions by applying one condition across the entire span",
+        "Resolution: =SUMIF([header_range],\">=\"&[threshold_cell],[values_range])"
+      ]
+    }
+  ],
+  "id": "52050"
+}

@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Count marked responses (e.g., 'x') for a subset of items identified by an ID list, and return a single total per category",
+        "Action: SUMPRODUCT wrapping COUNTIFS to sum counts across multiple criteria values (list-driven criteria)",
+        "Observation: COUNTIFS can accept a criteria range containing multiple IDs and returns an array of counts; SUMPRODUCT aggregates that array into one total, enabling category totals driven by a question-number list",
+        "Resolution: =SUMPRODUCT(COUNTIFS([id_range],[id_list_range],[mark_range],[mark_value]))"
+      ]
+    }
+  ],
+  "id": "55976"
+}

@@ -1,0 +1,14 @@
+{
+  "domain": "date_time",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Generate a periodic cashflow schedule across date headers, paying interest on coupon dates determined by frequency working backward from maturity, adding principal at maturity, and returning a placeholder for non-payment dates",
+        "Action: Use YEARFRAC to compute month distance, MOD to test coupon periodicity, EOMONTH to align maturity to month-end, EDATE to enforce cutoff, and boolean multiplication/addition to return cashflow amounts",
+        "Observation: Coupon dates can be detected by checking whether the number of months between the header date and maturity month-end is an exact multiple of the coupon interval (12/frequency); month-end alignment avoids day-of-month mismatches when headers are month-end dates",
+        "Resolution: =([nonMaturityCouponTest]*[withinSchedule]*[interestAmount]) + ([isMaturityHeader]*[principalAmount]) where [nonMaturityCouponTest]=MOD(YEARFRAC([headerDate],EOMONTH([maturityDate],0))*12,12/[frequency])=0; [withinSchedule]=EDATE([maturityDate],1)>[headerDate]; [isMaturityHeader]=EOMONTH([maturityDate],0)=[headerDate]"
+      ]
+    }
+  ],
+  "id": "45738"
+}

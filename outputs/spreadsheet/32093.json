@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return a fallback value unless exactly one value exists across multiple optional input cells; flag an error when multiple inputs are present",
+        "Action: Use COUNTA to count nonblank candidates, CHOOSE to branch by count, CONCAT (or TEXTJOIN) to return the single candidate, and IFERROR to trap invalid branches",
+        "Observation: Counting nonblanks across the candidate range enables a 3-way decision: 0 candidates -> fallback, 1 candidate -> return it, 2+ candidates -> force an error/caution",
+        "Resolution: =IFERROR(CHOOSE(COUNTA([candidate_range])+1,[fallback_value],CONCAT([candidate_range])),\"ERROR\")"
+      ]
+    }
+  ],
+  "id": "32093"
+}

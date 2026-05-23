@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return one of two fixed results depending on which of two mutually exclusive input cells contains a number (and avoid divide-by-zero/blank errors when the other cell is empty)",
+        "Action: Nested IF with AND tests; use N() to coerce/check numeric input and \"\" checks for blank cells",
+        "Observation: When exactly one of the two input cells is populated per row, mutually exclusive AND conditions can safely route to the correct output and return blank otherwise",
+        "Resolution: =IF(AND(N([input_cell_2]),[input_cell_1]=\"\"),[result_if_input2],IF(AND([input_cell_2]=\"\",N([input_cell_1])),[result_if_input1],\"\"))"
+      ]
+    }
+  ],
+  "id": "53647"
+}

@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Conditionally append punctuation to a text value only when the source text is non-blank",
+        "Action: IF test for blank combined with text concatenation using &",
+        "Observation: Avoid #VALUE! by ensuring the concatenation only occurs when the extracted initial is not an empty string",
+        "Resolution: =IF(LEFT([text_cell],1)=\"\",\"\",LEFT([text_cell],1)&\".\")"
+      ]
+    }
+  ],
+  "id": "49237"
+}

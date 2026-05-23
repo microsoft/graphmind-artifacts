@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Sum values across multiple adjacent columns for rows matching a single criterion",
+        "Action: Use SUM with array multiplication (boolean criteria mask * multi-column numeric range)",
+        "Observation: A TRUE/FALSE comparison can be coerced to 1/0 and multiplied by a multi-column range to zero-out non-matching rows, then summed across all included columns",
+        "Resolution: =SUM(([criteria_cell]=[criteria_range])*[sum_range_multi_column])"
+      ]
+    }
+  ],
+  "id": "55049"
+}

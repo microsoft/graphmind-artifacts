@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Count occurrences of a target value within a running list, but display the count only on the last row of each contiguous block (suppress intermediate rows)",
+        "Action: IF + OR to gate output based on current/next row, COUNTIF for running total, and SUM of prior outputs to convert running total into per-block total",
+        "Observation: The last row of a block is identified when the current row matches the target and the next row does not; subtracting the sum of previously displayed block totals prevents filling every matching row and yields the block count only at block end",
+        "Resolution: =IF(OR([current_cell]<>[target_value],[next_cell]=[target_value]),\"\",COUNTIF([start_of_list]:[current_cell],[target_value]) - SUM([output_header_or_prev_row]:[prev_output_cell]))"
+      ]
+    }
+  ],
+  "id": "58484"
+}

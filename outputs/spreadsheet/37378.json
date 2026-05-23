@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Generate a sequential ID that appears only when a corresponding cell in another column is non-empty",
+        "Action: Use IF to suppress output when the trigger cell is blank, and ROWS with an expanding range to create an incrementing counter",
+        "Observation: ROWS([start]:[current]) returns 1,2,3... as the formula is filled down, so it can serve as a running sequence independent of the trigger column content",
+        "Resolution: =IF([trigger_cell]=\"\",\"\",ROWS([sequence_start_cell]:[current_sequence_cell]))"
+      ]
+    }
+  ],
+  "id": "37378"
+}

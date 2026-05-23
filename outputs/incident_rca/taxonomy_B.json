@@ -1,0 +1,55 @@
+{
+  "domain": "nl-publish-primary",
+  "taxonomy": [
+    [
+      {
+        "incident_id": "single_incident",
+        "id": "incident_0_single_incident"
+      },
+      {
+        "problem": "Publish-path outage symptoms: publish quota exceeded errors (NLX-3301) spiking and publish rate dropping, suggesting quota/backpressure issues affecting publishers.",
+        "id": "problem_0_single_incident",
+        "node_label": "Publish quota errors spike, publish rate drops"
+      },
+      {
+        "action_id": "action_0_single_incident",
+        "actor": "nl-oncall-04",
+        "raw_action_string": "``` [08:57:04.101] pulling s3://nl-config/topics/prod/northeu.yaml [08:57:04.334] parsed 2141 rows [08:57:05.012] applied 2141 rows OK ```",
+        "description": "What: A log snippet showing the config-sync bot pulling a specific configuration file from S3 (`s3://nl-config/topics/prod/northeu.yaml`) and then parsing/applying 2141 rows.\nWhy: The team suspected the config DB should have been immutable during ops hours, so they wanted to verify what the sync bot actually read (to determine whether the bot pulled the wrong file vs. the config itself being changed).\nPurpose: Validate the source-of-truth input to the scheduled config sync and establish a timeline around when the refill_rate became 0.\nExpected outcome: Evidence of which exact config artifact was used by the sync job and whether it successfully applied.\nActual findings/conclusions: The log indicates the bot pulled `topics/prod/northeu.yaml`, parsed 2141 rows, and applied them successfully—supporting the conclusion that the bot executed normally and that the problematic value likely existed in the file at that time.\nImpact on troubleshooting: Narrowed the investigation from “sync bot malfunction” to “bad config content/change in the S3 YAML (or upstream repo) that the bot consumed.”",
+        "type": "other_action",
+        "possible_outcome": "Sync bot log shows the config file is 412KB and can be diffed against the version from 24 hours ago, enabling verification of recent config changes.",
+        "id": "action_0_single_incident",
+        "node_label": "Verify config-sync pulled correct S3 YAML"
+      },
+      {
+        "action_id": "action_1_single_incident",
+        "actor": "nl-oncall-02",
+        "raw_action_string": "https://dashboards.nimbus-ledger.example.com/platform/regional-health",
+        "description": "What: A URL to the platform-wide regional health dashboard.\nWhy: First-line triage used it to check whether the NLX-3301 spike correlated with broader regional/platform issues affecting other teams.\nPurpose: Quickly rule in/out a widespread outage versus a service-specific/config-specific issue.\nExpected outcome: If the issue were regional, the dashboard would show anomalies beyond this service/topic.\nActual findings/conclusions: The text states “Nothing anomalous outside our own NLX-3301 trace,” indicating no broader correlated signal.\nImpact on troubleshooting: Helped rule out a platform-wide/regional incident and reinforced focusing on the quota-broker/topic configuration path.",
+        "type": "dashboard_url",
+        "trigger_observation": "Sync bot log shows the config file is 412KB and can be diffed against the version from 24 hours ago, enabling verification of recent config changes.",
+        "possible_outcome": "Regional health dashboard check found nothing anomalous outside the team’s own NLX-3301 trace, suggesting the issue is not platform-wide.",
+        "id": "action_1_single_incident",
+        "node_label": "Check regional health dashboard for broader issues"
+      },
+      {
+        "action_id": "action_2_single_incident",
+        "actor": "nl-oncall-02",
+        "raw_action_string": "``` nl_incident_events | where TIMESTAMP > ago(24h) | summarize count() by region, err_code ```",
+        "description": "What: A AQL query over `nl_incident_events` filtering to the last 24 hours and summarizing counts by `region` and `err_code`.\nWhy: After checking the regional health dashboard, the engineer ran a cross-region incident-events query to validate whether other regions/teams were seeing similar error codes (correlation analysis).\nPurpose: Determine whether NLX-3301 was isolated to their region/service or part of a broader cross-region pattern.\nExpected outcome: If widespread, multiple regions and/or multiple error codes would appear prominently.\nActual findings/conclusions: The summary states “only our own err_code shows up in the top-10. no cross-team correlation,” indicating the issue was localized.\nImpact on troubleshooting: Reduced scope and supported the conclusion that the incident was specific to their configuration/topic rather than a systemic platform issue.",
+        "type": "db_query",
+        "trigger_observation": "Regional health dashboard check found nothing anomalous outside the team’s own NLX-3301 trace, suggesting the issue is not platform-wide.",
+        "possible_outcome": "Cross-region incident-events query shows only their own error code in the top-10 with no cross-team correlation, reinforcing a localized/config-specific issue.",
+        "id": "action_2_single_incident",
+        "node_label": "Run cross-region AQL for error correlation"
+      },
+      {
+        "action_id": "action_mitigation_0_single_incident",
+        "type": "mitigation",
+        "cause": "PR #4429 (onboarding-tooling change) set refill_rate=0 for production topics in topics/prod/northeu.yaml; scheduled config sync propagated it to quota-broker. It merged without required config-review approval due to stale CODEOWNERS.",
+        "id": "action_mitigation_0_single_incident",
+        "node_label": "Restore refill rate and fix config review gate"
+      }
+    ]
+  ]
+}

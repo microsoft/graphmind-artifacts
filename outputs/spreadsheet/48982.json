@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Generate the next sequential number based on the current maximum in a column while allowing blanks based on a condition",
+        "Action: IF to conditionally return blank; MAX over a range; add 1 to increment",
+        "Observation: Including the current cell (or any cell that depends on the formula) inside the MAX range creates a circular reference and can yield incorrect displayed results (e.g., 000) even though partial evaluation (F9) shows the expected numeric value",
+        "Resolution: =IF([condition_cell]=[blank_flag],\"\",MAX([start_cell]:[cell_above_current])+1)"
+      ]
+    }
+  ],
+  "id": "48982"
+}

@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Calculate tiered (bracketed) bonus amounts where each tier pays a rate only on the portion of income within that tier's bounds",
+        "Action: Use MIN/MAX bounding to isolate the income slice per tier, then multiply by the tier rate",
+        "Observation: Each tier payout equals rate * MAX( MIN(income, upper_bound) - lower_bound, 0 ); for the top tier, upper_bound can be blank/omitted and treated as income",
+        "Resolution: =MAX(MIN([Income]-[LowerBound],IF([UpperBoundCell]=\"\",[Income],[UpperBoundCell])-[LowerBound]),0)*[Rate]"
+      ]
+    }
+  ],
+  "id": "32902"
+}

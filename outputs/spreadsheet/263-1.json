@@ -1,0 +1,30 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Calculate total area (Width×Height) for each category/material type from a variable-length list",
+        "Action: SUMPRODUCT with boolean criteria array multiplied by numeric arrays",
+        "Observation: SUMPRODUCT can apply a category filter and aggregate row-wise products without helper columns; works well for dynamic row counts when ranges are sized to the data",
+        "Resolution: =SUMPRODUCT(([CategoryRange]=[CategoryCell])*[WidthRange]*[HeightRange])"
+      ]
+    },
+    {
+      "path": [
+        "Problem: Make the source data range dynamic so the aggregation automatically includes new rows",
+        "Action: Convert the source range to an Excel Table and use structured references in SUMPRODUCT",
+        "Observation: Tables auto-expand and structured references keep formulas stable as rows are added/removed",
+        "Resolution: =SUMPRODUCT((Table1[Mtrl]=[CategoryCell])*Table1[Width]*Table1[Height])"
+      ]
+    },
+    {
+      "path": [
+        "Problem: Generate a unique list of material types to drive the summary output (so the summary adapts to new types)",
+        "Action: Use UNIQUE (or Power Query 'Remove Duplicates') to create the category list",
+        "Observation: A dynamic category list prevents manual maintenance and ensures the summary covers all present types",
+        "Resolution: =UNIQUE([CategoryRange])"
+      ]
+    }
+  ],
+  "id": "263-1"
+}

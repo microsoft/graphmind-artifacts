@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return a category label based on which of multiple candidate columns contains a numeric value in the current row",
+        "Action: MATCH with a large numeric lookup value to find the position of the last numeric entry, then INDEX to return the corresponding header; wrap with IFNA to handle rows with no numeric values",
+        "Observation: In MATCH with approximate match, using an extremely large number (e.g., 99^99) against a 1-row/1D range returns the position of the last numeric value while ignoring blanks/text; IFNA prevents errors when no numeric values exist",
+        "Resolution: IFNA(INDEX([header_row_range], MATCH([very_large_number], [row_candidate_range])), \"\")"
+      ]
+    }
+  ],
+  "id": "50486"
+}

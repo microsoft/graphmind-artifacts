@@ -1,0 +1,14 @@
+{
+  "domain": "text_manipulation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Split a text string from one cell into individual characters across adjacent columns",
+        "Action: Extract characters with MID and generate the character position using COLUMNS; suppress overflow with IFERROR",
+        "Observation: COLUMNS over an expanding horizontal range returns 1,2,3,... as the formula is filled right, matching each character index; MID returns an error once the index exceeds the string length",
+        "Resolution: =IFERROR(MID([text_cell],COLUMNS([first_output_cell]:[current_output_cell]),1),\"\")"
+      ]
+    }
+  ],
+  "id": "59639"
+}

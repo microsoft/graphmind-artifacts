@@ -1,0 +1,14 @@
+{
+  "domain": "text_manipulation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Concatenate multiple matching date values into a single delimited cell while preserving a specific date display format",
+        "Action: Filter values with IF, de-duplicate with UNIQUE, format with TEXT, then concatenate with TEXTJOIN",
+        "Observation: TEXTJOIN outputs text; to control date appearance you must convert date serials to formatted text (TEXT) before joining, and apply TEXT to the entire spilled array returned by UNIQUE",
+        "Resolution: =TEXTJOIN([delimiter],TRUE,TEXT(UNIQUE(IF([criteria_range]=[criteria_value],[date_range],\"\")),\"dd/mm/yyyy\"))"
+      ]
+    }
+  ],
+  "id": "45896"
+}

@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Generate sequential IDs only for nonblank rows in a range (ignoring gaps), starting from a fixed offset, and concatenate with a fixed prefix",
+        "Action: IF to suppress output on blank rows + COUNTIF running count of nonblanks + TEXT to zero-pad + string concatenation",
+        "Observation: A cumulative COUNTIF over an expanding range (from first row to current row) returns the sequence index for each nonblank entry, so blanks do not increment the counter",
+        "Resolution: =IF([current_cell]=\"\",\"\",[prefix_cell]&[fixed_text]&TEXT(COUNTIF([start_cell]:[current_cell],\"<>\")+[start_offset],\"[zero_pad_format]\"))"
+      ]
+    }
+  ],
+  "id": "38537"
+}

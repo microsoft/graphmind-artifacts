@@ -1,0 +1,5 @@
+
+# Quarantined pre-scrub artifacts derived from source data. Do not ship.
+outputs/_archive_microsoft_derived/
+__pycache__/
+*.pyc

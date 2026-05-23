@@ -1,0 +1,14 @@
+{
+  "domain": "date_time",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Extract only the time portion from a date-time value while keeping it as a numeric time that can be formatted (e.g., hh:mm:ss AM/PM)",
+        "Action: Subtract the integer date part using INT to leave the fractional time component",
+        "Observation: Excel stores date-times as serial numbers where the integer part is the date and the fractional part is the time; text extraction (e.g., RIGHT) returns a string that won't respond to time formatting",
+        "Resolution: =[datetime_cell]-INT([datetime_cell])"
+      ]
+    }
+  ],
+  "id": "32438"
+}

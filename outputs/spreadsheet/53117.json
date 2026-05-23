@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return original category unless a trigger value is present, in which case return a related category based on a group-wise maximum from filtered records",
+        "Action: IF to branch; MAXIFS to compute max value by group with exclusion criteria; INDEX+MATCH to return the label corresponding to that max value",
+        "Observation: When the trigger occurs, you must (1) compute the maximum numeric measure within the same group while excluding certain rows, then (2) map that maximum back to its associated text field; sorting is irrelevant because MATCH searches the full range",
+        "Resolution: =IF([TriggerCell]=[TriggerValue], INDEX([ReturnRange], MATCH(MAXIFS([ValueRange],[GroupRange],[GroupKey],[ExcludeRange],[ExcludeCriteria]), [ValueRange], 0)), [TriggerCell])"
+      ]
+    }
+  ],
+  "id": "53117"
+}

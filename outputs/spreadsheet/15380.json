@@ -1,0 +1,14 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Extract a token from a delimited text string and map it to a corresponding label via a lookup table",
+        "Action: Use MID + FIND to parse the desired substring, then VLOOKUP with exact match to return the mapped value",
+        "Observation: Works when the target code is in a consistent position/length relative to a delimiter and the lookup table’s first column contains unique codes",
+        "Resolution: =VLOOKUP(MID([text_cell],FIND([delimiter],[text_cell])+[offset],[token_length]),[lookup_table],[return_col_index],0)"
+      ]
+    }
+  ],
+  "id": "15380"
+}

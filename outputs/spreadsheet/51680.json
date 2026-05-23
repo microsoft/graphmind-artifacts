@@ -1,0 +1,14 @@
+{
+  "domain": "text_manipulation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Concatenate header labels for columns that meet a row-wise flag condition into a single comma-separated list without a leading/trailing delimiter",
+        "Action: Build conditional text segments with REPT, concatenate them in the desired column order, then remove the leading delimiter with REPLACE",
+        "Observation: Prefixing each included label with a delimiter (\", \") simplifies concatenation; a final cleanup step can reliably remove the first delimiter when at least one item is included, while returning blank when none are included",
+        "Resolution: =REPLACE(REPT(\", \"&[Header1],[Flag1]=\"Y\")&REPT(\", \"&[Header2],[Flag2]=\"Y\")&...&REPT(\", \"&[HeaderN],[FlagN]=\"Y\"),1,2,\"\")"
+      ]
+    }
+  ],
+  "id": "51680"
+}

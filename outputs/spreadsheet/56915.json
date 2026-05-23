@@ -1,0 +1,14 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Populate a 2D output grid by intersecting a row label and a column header, filtered by a selected entity, and copy across/down reliably",
+        "Action: INDEX with two MATCH functions plus a horizontal offset using COLUMNS; wrap with IFERROR; apply rounding/number formatting separately as needed",
+        "Observation: Using MATCH to find the entity’s starting column and adding a COLUMNS-based offset makes the formula fill correctly across multiple output columns even when source layout is wide; merged cells in the source can be bypassed by referencing the underlying full data range",
+        "Resolution: IFERROR(INDEX([data_matrix], MATCH([row_label_cell],[row_labels_range],0), MATCH([entity_selector_cell],[entity_headers_range],0) + COLUMNS([first_output_cell]:[current_output_cell]) - 1), \"\")"
+      ]
+    }
+  ],
+  "id": "56915"
+}

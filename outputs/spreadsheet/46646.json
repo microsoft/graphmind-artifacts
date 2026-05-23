@@ -1,0 +1,14 @@
+{
+  "domain": "date_time",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Calculate a monthly percentage/rate by dividing a monthly count by the number of days in that month for a given year (handling leap years automatically)",
+        "Action: Use EOMONTH to get the last day of the target month and DAY to return the day number (days in month), then divide the count by that result",
+        "Observation: DAY(EOMONTH(date,0)) returns the number of days in the month of [date], automatically accounting for leap years when [date] is in February of a leap year",
+        "Resolution: =[monthly_count]/DAY(EOMONTH(DATE([year],[month_number],1),0))"
+      ]
+    }
+  ],
+  "id": "46646"
+}

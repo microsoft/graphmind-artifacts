@@ -1,0 +1,14 @@
+{
+  "domain": "date_time",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Combine separate day, month, and year columns into a valid Excel date value",
+        "Action: Use the DATE function to construct a date from year, month, and day components",
+        "Observation: DATE returns a true date serial number (not text) when given numeric year/month/day, enabling date-time formatting and calculations",
+        "Resolution: =DATE([year_cell],[month_cell],[day_cell])"
+      ]
+    }
+  ],
+  "id": "52917"
+}

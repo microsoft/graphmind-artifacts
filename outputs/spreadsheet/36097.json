@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Calculate a value based on multiple profit/loss scenarios with different recoupment rules",
+        "Action: Nested IF statements comparing profit/loss against thresholds (0 and original cost) and returning different arithmetic results",
+        "Observation: The logic is a 3-branch decision tree: loss case, small-profit case, and large-profit case; each branch maps to a distinct recoupment calculation",
+        "Resolution: IF([Profit]<0, [ITV]+[Profit], IF([Profit]<[Cost], [Profit], [Cost]-[ITV]))"
+      ]
+    }
+  ],
+  "id": "36097"
+}

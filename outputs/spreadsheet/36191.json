@@ -1,0 +1,14 @@
+{
+  "domain": "text_manipulation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Extract a substring containing the first N words from a text string while excluding trailing content (e.g., an email address)",
+        "Action: SUBSTITUTE to replace the Nth delimiter occurrence with a unique marker, then LEFT + FIND to return text before the marker",
+        "Observation: When the desired output is the first two space-delimited tokens, replacing the 2nd space with a marker creates a reliable cut point before the unwanted remainder",
+        "Resolution: =LEFT(SUBSTITUTE([text_cell],\" \",\"|\",2),FIND(\"|\",SUBSTITUTE([text_cell],\" \",\"|\",2))-1)"
+      ]
+    }
+  ],
+  "id": "36191"
+}

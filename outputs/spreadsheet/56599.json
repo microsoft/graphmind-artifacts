@@ -1,0 +1,14 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return an associated value from a table based on a lookup key, and show a custom message when the key is missing/invalid",
+        "Action: INDEX + MATCH for exact-match lookup, wrapped in IFERROR for not-found handling",
+        "Observation: MATCH returns the row position of the lookup value within the key column; INDEX uses that position to fetch the corresponding value from the return column; IFERROR catches #N/A (not found) and other errors",
+        "Resolution: IFERROR(INDEX([return_column_range], MATCH([lookup_value], [lookup_key_range], 0)), \"[not_found_message]\")"
+      ]
+    }
+  ],
+  "id": "56599"
+}

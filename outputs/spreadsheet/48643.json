@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Calculate a running end-of-period balance where each period adds a variable contribution and applies a variable growth rate, with a special case for the first period (no prior balance).",
+        "Action: Use IF to branch between first-row initialization and recursive running-balance calculation; use ROW (or similar) to detect the first data row; apply arithmetic for contribution + prior balance, then multiply by (1+rate).",
+        "Observation: This is a recursive accumulation pattern: each row depends on the previous row’s ending balance, so the first row must be seeded differently to avoid referencing a non-existent prior balance.",
+        "Resolution: =IF(ROW([deposit_cell])=[first_data_row], [deposit_cell]*(1+[rate_cell]), ([prior_end_balance]+[deposit_cell])*(1+[rate_cell]))"
+      ]
+    }
+  ],
+  "id": "48643"
+}

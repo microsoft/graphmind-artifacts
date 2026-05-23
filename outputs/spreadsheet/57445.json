@@ -1,0 +1,14 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return a value from a reference table using two input criteria (one exact match category + one numeric threshold) from another sheet",
+        "Action: LOOKUP with a boolean mask to filter by category and approximate match on the numeric criterion",
+        "Observation: Dividing the numeric lookup range by (category_range=category) creates errors for non-matching categories, so LOOKUP ignores them and finds the last valid value <= lookup_value within the matching category",
+        "Resolution: =LOOKUP([lookup_number],[number_range]/([category_range]=[category_value]),[return_range])"
+      ]
+    }
+  ],
+  "id": "57445"
+}

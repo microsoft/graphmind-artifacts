@@ -1,0 +1,14 @@
+{
+  "domain": "array_formula",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Extract a filtered list from a single column by returning only items that meet a text-prefix condition, skipping non-matching rows",
+        "Action: Use INDEX to return the nth matching value, SMALL to get the nth matching position, and IF+LEFT to build an array of matching row indices (entered as an array formula in legacy Excel)",
+        "Observation: Converting matches into row numbers and taking the k-th smallest row number creates a sequential list of matches without helper columns; copying the formula down increments k via ROW(A1), ROW(A2), etc.",
+        "Resolution: INDEX([return_range], SMALL(IF(LEFT([criteria_range], LEN([prefix]))=[prefix], ROW([criteria_range]) - ROW(INDEX([criteria_range],1,1)) + 1), ROWS([first_output_cell]:[current_output_cell])))"
+      ]
+    }
+  ],
+  "id": "10452"
+}

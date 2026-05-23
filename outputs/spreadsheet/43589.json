@@ -1,0 +1,14 @@
+{
+  "domain": "text_manipulation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Compute an inclusive day count from a text-based numeric range formatted like 'start to end'",
+        "Action: Parse start/end numbers using FIND with LEFT/MID, clean with TRIM, then subtract and add 1",
+        "Observation: Works when the delimiter token (e.g., 'to') consistently separates two numeric values and the result should be inclusive of both endpoints",
+        "Resolution: =([end_num]-[start_num])+1 where [start_num]=TRIM(LEFT([text_cell],FIND(\"to\",[text_cell])-1)) and [end_num]=TRIM(MID([text_cell],FIND(\"to\",[text_cell])+LEN(\"to\"),[max_len]))"
+      ]
+    }
+  ],
+  "id": "43589"
+}

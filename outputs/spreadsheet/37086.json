@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Apply a conditional adjustment to a calculated total based on a category code in another column",
+        "Action: Use IF to branch logic and SUM to compute the base total across multiple columns",
+        "Observation: When the category has only two outcomes, a single IF can choose between adding or subtracting a fixed offset from the same base calculation",
+        "Resolution: =IF([category_cell]=[code_for_add],SUM([value_range])+[offset],SUM([value_range])-[offset])"
+      ]
+    }
+  ],
+  "id": "37086"
+}

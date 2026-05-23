@@ -1,0 +1,22 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Compute an average for a group with multiple inclusion/exclusion criteria and return blank when no matching records exist",
+        "Action: AVERAGEIFS wrapped in IFERROR",
+        "Observation: AVERAGEIFS returns a #DIV/0! error when no rows meet all criteria; IFERROR can convert this to a blank output",
+        "Resolution: IFERROR(AVERAGEIFS([avg_range],[group_range],[group_value],[numeric_range],[numeric_criteria],[text_range],[text_criteria]),\"\")"
+      ]
+    },
+    {
+      "path": [
+        "Problem: Exclude records based on a status keyword while averaging",
+        "Action: Use a wildcard-based not-equal criteria in AVERAGEIFS (e.g., \"<>*keyword*\")",
+        "Observation: Wildcards in criteria allow partial text matching; \"<>*keyword*\" excludes any status containing the keyword anywhere in the text",
+        "Resolution: AVERAGEIFS([avg_range],[status_range],\"<>*\"&[excluded_keyword]&\"*\",[other_ranges_and_criteria]...)"
+      ]
+    }
+  ],
+  "id": "55708"
+}

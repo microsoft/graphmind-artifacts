@@ -1,0 +1,14 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Retrieve a related value from a reference table for each item in a list, leaving blanks when no match exists",
+        "Action: Use VLOOKUP for exact-match lookup and wrap with IFERROR to suppress #N/A",
+        "Observation: Exact-match VLOOKUP returns the corresponding column value when the lookup key exists in the first column of the lookup range; IFERROR can return an empty string for missing items",
+        "Resolution: =IFERROR(VLOOKUP([lookup_value],[lookup_table], [return_col_index], FALSE), \"\")"
+      ]
+    }
+  ],
+  "id": "45063"
+}

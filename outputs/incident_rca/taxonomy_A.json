@@ -1,0 +1,83 @@
+{
+  "domain": "nl-sre-primary",
+  "taxonomy": [
+    [
+      {
+        "incident_id": "single_incident",
+        "id": "incident_0_single_incident"
+      },
+      {
+        "problem": "Intermittent lease-renewal oscillation causing bursts of NLX-4207 lease renewal timeouts and NLX-4210 stale primary errors, elevating p99 write latency and queuing writes up to ~30s.",
+        "id": "problem_0_single_incident",
+        "node_label": "Lease-renewal oscillation causing timeouts and stale primaries"
+      },
+      {
+        "action_id": "action_0_single_incident",
+        "actor": "nl-oncall-01",
+        "raw_action_string": "https://dashboards.nimbus-ledger.example.com/platform/regional-health",
+        "description": "What: Opens the Nimbus Ledger platform-wide regional health dashboard URL.\nWhy: First-line triage used it to check whether other regions/teams were seeing correlated issues alongside NLX-4207 bursts.\nPurpose: Determine if the incident was platform-wide/regional or isolated to their service/region.\nExpected outcome: Evidence of broader regional degradation or correlated signals in other regions.\nActual findings/conclusions: The text states “Nothing anomalous outside our own NLX-4207 trace,” indicating no broader correlated anomaly.\nImpact on troubleshooting: Helped rule out a wider platform/regional incident and focus investigation on their own component/path.",
+        "type": "dashboard_url",
+        "possible_outcome": "Platform-wide regional health view shows nothing anomalous outside the incident’s own NLX-4207 trace; no broader correlated issues detected.",
+        "id": "action_0_single_incident",
+        "node_label": "Check platform-wide regional health dashboard"
+      },
+      {
+        "action_id": "action_1_single_incident",
+        "actor": "nl-oncall-01",
+        "raw_action_string": "nl_incident_events | where TIMESTAMP > ago(24h) | summarize count() by region, err_code",
+        "description": "What: AQL query over `nl_incident_events` filtering to the last 24 hours and summarizing counts by `region` and `err_code`.\nWhy: Ran as a cross-region/cross-team correlation check after seeing NLX-4207 bursts.\nPurpose: Identify whether NLX-4207 (or other error codes) were occurring broadly across regions, suggesting a systemic issue.\nExpected outcome: A breakdown showing multiple regions/teams impacted if there was a widespread problem.\nActual findings/conclusions: “only our own err_code shows up in the top-10. no cross-team correlation.”\nImpact on troubleshooting: Supported the conclusion that the issue was localized rather than a platform-wide correlated event.",
+        "type": "db_query",
+        "trigger_observation": "Platform-wide regional health view shows nothing anomalous outside the incident’s own NLX-4207 trace; no broader correlated issues detected.",
+        "possible_outcome": "Cross-region incident-events query shows only this incident’s error code in the top results; no cross-team/cross-service correlation found.",
+        "id": "action_1_single_incident",
+        "node_label": "Query incident events for cross-region correlation"
+      },
+      {
+        "action_id": "action_2_single_incident",
+        "actor": "nl-mgr-31",
+        "raw_action_string": "nl_lease_events | where err_code == 'NLX-4207' | where TIMESTAMP > ago(24h) | summarize count() by region",
+        "description": "What: AQL query over `nl_lease_events` filtering to `err_code == 'NLX-4207'` and last 24 hours, then summarizing counts by `region`.\nWhy: Performed a quick pull to quantify and compare NLX-4207 incidence across regions after discussion about thresholds/offsets and to see which regions were clean.\nPurpose: Identify regional distribution and highlight anomalies (e.g., why eastus is clean) to guide hypotheses (build differences, load differences, etc.).\nExpected outcome: Counts per region showing where NLX-4207 is occurring.\nActual findings/conclusions: Reported results: westus 4102, northeu 3980, eastus 0, southasia 12; concluded eastus is completely clean and asked what differs about eastus.\nImpact on troubleshooting: Narrowed investigation by identifying eastus as a control region (no errors), enabling follow-up hypotheses around build/version or traffic/load differences.\n\nAQL literal values in predicates/filters: 'NLX-4207', ago(24h). No literal values were stated as discovered by prior actions (the error code is part of the incident context), so no hard dependency is established.",
+        "type": "db_query",
+        "trigger_observation": "Cross-region incident-events query shows only this incident’s error code in the top results; no cross-team/cross-service correlation found.",
+        "possible_outcome": "NLX-4207 events are concentrated in westus and northeu (thousands) while eastus shows zero, indicating a region-specific difference rather than uniform global behavior.",
+        "id": "action_2_single_incident",
+        "node_label": "Compare NLX-4207 lease errors by region"
+      },
+      {
+        "action_id": "action_3_single_incident",
+        "actor": "nl-arch-41",
+        "raw_action_string": "https://dashboards.nimbus-ledger.example.com/incident/999000001",
+        "description": "What: Opens the Nimbus Ledger incident dashboard for incident 999000001.\nWhy/Purpose: The summary states metrics were pulled from the \"nl_lease_events dashboard\" and lists dashboards touched; this link is part of the investigation tooling used to view incident-specific telemetry.\nExpected outcome: View incident timeline/metrics (e.g., NLX-4207 rates) to understand impact and progression.\nActual findings/conclusions: The narrative indicates NLX-4207 bursts occurred in westus/northeu and eastus behavior differed until build alignment; the dashboard was a source for those referenced metrics.\nImpact on troubleshooting: Supported data-driven validation of hypotheses (e.g., canary effect, region comparisons) and confirmation of mitigation after 9901 rollout.",
+        "type": "dashboard_url",
+        "trigger_observation": "NLX-4207 events are concentrated in westus and northeu (thousands) while eastus shows zero, indicating a region-specific difference rather than uniform global behavior.",
+        "id": "action_3_single_incident",
+        "node_label": "Review incident dashboard timeline and metrics"
+      },
+      {
+        "action_id": "action_4_single_incident",
+        "actor": "nl-arch-41",
+        "raw_action_string": "https://dashboards.nimbus-ledger.example.com/lease-oscillation-detail",
+        "description": "What: Opens a lease oscillation detail dashboard.\nWhy/Purpose: Used during investigation of \"recurring lease-renewal oscillation\" / NLX-4207 bursts to drill into detailed oscillation signals beyond the high-level incident view.\nExpected outcome: Identify patterns/correlations (timing, regions, renewal behavior) that could explain NLX-4207 spikes.\nActual findings/conclusions: The write-up concludes a write-coordinator build regression (8901) caused reordering under contention for primary regions; this dashboard likely helped validate oscillation shape across regions.\nImpact on troubleshooting: Enabled deeper inspection of the oscillation phenomenon to support root-cause isolation and validate mitigation effectiveness.",
+        "type": "dashboard_url",
+        "id": "action_4_single_incident",
+        "node_label": "Inspect lease oscillation detail dashboard"
+      },
+      {
+        "action_id": "action_5_single_incident",
+        "actor": "nl-arch-41",
+        "raw_action_string": "https://dashboards.nimbus-ledger.example.net/southasia-placement-drift",
+        "description": "What: Opens a dashboard focused on southasia placement drift.\nWhy/Purpose: The summary states southasia remained elevated with a different failure mode correlated with shard placement drift; this dashboard is a targeted tool to investigate that residual issue.\nExpected outcome: Visualize/confirm placement drift signals in southasia and correlate them with the low-rate NLX-4207 stream.\nActual findings/conclusions: The narrative concludes southasia is a separate failure mode (placement-service problem) distinct from the 8901/9901 write-coordinator regression.\nImpact on troubleshooting: Helped separate the incident into two causes and justified splitting southasia residual into a separate work item for placement-service RCA.",
+        "type": "dashboard_url",
+        "id": "action_5_single_incident",
+        "node_label": "Investigate southasia shard placement drift dashboard"
+      },
+      {
+        "action_id": "action_mitigation_0_single_incident",
+        "type": "mitigation",
+        "resolution": "Write-coordinator fix build 9901 (targeted revert of the 8901 renewal-ack reordering change) rolled out overnight; NLX-4207 dropped to baseline in westus/eastus/northeu within ~20 minutes.",
+        "id": "action_mitigation_0_single_incident",
+        "node_label": "Roll out write-coordinator revert build to stabilize"
+      }
+    ]
+  ]
+}

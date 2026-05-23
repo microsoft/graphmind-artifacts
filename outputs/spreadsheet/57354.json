@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Sum values across many columns by matching a repeated header/category label, so totals update automatically as columns are added",
+        "Action: Use SUMIF to aggregate a row of numbers based on matching criteria in a parallel header row",
+        "Observation: This works when each value column has a corresponding category label in a header row directly above (or aligned with) the values being summed",
+        "Resolution: =SUMIF([header_row_range],[category_cell],[values_row_range])"
+      ]
+    }
+  ],
+  "id": "57354"
+}

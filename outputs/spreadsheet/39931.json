@@ -1,0 +1,14 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return a value from one column by matching a record using two separate criteria (two-column key lookup)",
+        "Action: Use INDEX to return the target column and MATCH to find the row position using concatenated criteria arrays (array formula / implicit array evaluation)",
+        "Observation: When no single unique key exists, concatenating the two criteria columns creates a composite key that MATCH can search exactly; requires consistent data types and exact-match (0)",
+        "Resolution: INDEX([return_range], MATCH([criteria1_cell]&[criteria2_cell], [criteria1_range]&[criteria2_range], 0))"
+      ]
+    }
+  ],
+  "id": "39931"
+}

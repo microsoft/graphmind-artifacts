@@ -1,0 +1,30 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Compute a conditional net total by summing one column and subtracting multiple expense columns for rows matching a case-sensitive category, using a single vectorized formula",
+        "Action: Use SUMPRODUCT with EXACT for case-sensitive row filtering, and MMULT with a +1/-1 weight vector to add/subtract selected columns across each matching row",
+        "Observation: EXACT returns a boolean array enabling case-sensitive matching; MMULT collapses multiple columns into a per-row net value using a sign/weight vector, which SUMPRODUCT can then aggregate over matching rows",
+        "Resolution: SUMPRODUCT(EXACT([criteria_cell],[criteria_range]) * MMULT([numeric_block], [weights_vector]))"
+      ]
+    },
+    {
+      "path": [
+        "Problem: Treat blanks as zeros in a conditional net calculation across multiple columns",
+        "Action: Coerce blanks to zero by multiplying the numeric block by a nonblank mask ([numeric_block]<>\"\") before MMULT",
+        "Observation: MMULT propagates blanks as zeros only if the input array is numeric; masking converts blanks to 0 while preserving existing numbers",
+        "Resolution: SUMPRODUCT(EXACT([criteria_cell],[criteria_range]) * MMULT(([numeric_block]<>\"\")*[numeric_block], [weights_vector]))"
+      ]
+    },
+    {
+      "path": [
+        "Problem: Return final results without decimals (integer display/output)",
+        "Action: Wrap the calculation in ROUND (or INT/TRUNC as needed) and/or apply a number format with 0 decimal places",
+        "Observation: Formatting changes display only; ROUND changes the stored result, which may be required if downstream formulas expect integers",
+        "Resolution: ROUND(SUMPRODUCT(EXACT([criteria_cell],[criteria_range]) * MMULT(([numeric_block]<>\"\")*[numeric_block], [weights_vector])),0)"
+      ]
+    }
+  ],
+  "id": "38074"
+}

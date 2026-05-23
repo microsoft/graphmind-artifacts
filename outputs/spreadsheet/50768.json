@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Populate each cell of a 2D matrix with all record IDs whose two attributes match the matrix row/column headers, concatenated into a single comma-separated list",
+        "Action: FILTER matching IDs by two criteria, then TEXTJOIN to concatenate the resulting list (optionally suppress blanks)",
+        "Observation: This works when each matrix cell corresponds to a unique pair of header values (row header + column header) and multiple records may match the same pair; FILTER returns a spill range that TEXTJOIN can combine into one cell",
+        "Resolution: TEXTJOIN(\", \", TRUE, FILTER([id_range], ([attr1_range]=[row_header_value])*([attr2_range]=[col_header_value]), \"\"))"
+      ]
+    }
+  ],
+  "id": "50768"
+}

@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Sum values in a 2D matrix where row criteria and a column-header criterion all match",
+        "Action: SUMPRODUCT with boolean criteria arrays multiplied by the numeric matrix",
+        "Observation: All criteria arrays must align to the summed matrix dimensions; a column-header match must be included as a 1×N mask multiplied across the matrix (not used as the sum range)",
+        "Resolution: =SUMPRODUCT(([row_key_range]=[row_key_criteria])*([row_key2_range]=[row_key2_criteria])*([header_row_range]=[header_criteria]),[matrix_range])"
+      ]
+    }
+  ],
+  "id": "14240"
+}

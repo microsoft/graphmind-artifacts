@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return a cumulative status per row based on prioritized conditions found anywhere from a fixed start row down to the current row",
+        "Action: Use expanding (mixed) absolute/relative ranges with COUNTIFS wrapped in nested IF statements to enforce priority",
+        "Observation: Anchoring the start of each criteria range (e.g., A$start:Acurrent) creates a running window; nested IF ensures the first matching condition wins",
+        "Resolution: =IF(COUNTIFS([KeyCol]$[StartRow]:[KeyCol][ThisRow],[Crit1Key],[FlagCol]$[StartRow]:[FlagCol][ThisRow],[CritFlag])>0,[Result1],IF(COUNTIFS([KeyCol]$[StartRow]:[KeyCol][ThisRow],[Crit2Key],[FlagCol]$[StartRow]:[FlagCol][ThisRow],[CritFlag])>0,[Result2],IF(COUNTIFS([KeyCol]$[StartRow]:[KeyCol][ThisRow],[Crit3Key],[FlagCol]$[StartRow]:[FlagCol][ThisRow],[CritFlag])>0,[Result3],[DefaultResult])))"
+      ]
+    }
+  ],
+  "id": "42198"
+}

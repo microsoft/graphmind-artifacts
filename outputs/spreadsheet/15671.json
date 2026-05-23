@@ -1,0 +1,14 @@
+{
+  "domain": "text_manipulation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Convert values that may be stored as numbers into text strings across a column without manual cell editing, preserving the displayed digits",
+        "Action: Use IF with ISTEXT/ISNUMBER to branch logic and TEXT to coerce numeric values into text with a fixed digit format",
+        "Observation: Changing a cell's format to Text does not convert existing numeric values; TEXT forces a true text result while leaving already-text values unchanged",
+        "Resolution: =IF(ISTEXT([cell]),[cell],IF(ISNUMBER([cell]),TEXT([cell],\"0\"),[cell]))"
+      ]
+    }
+  ],
+  "id": "15671"
+}
