@@ -1,0 +1,22 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Calculate a running (expanding) average that includes all values from a fixed start cell down to the current row and updates when filled down",
+        "Action: Use AVERAGE with a mixed reference (absolute start, relative end) and copy/fill down",
+        "Observation: Locking the first cell with absolute references keeps the start of the range fixed while the relative end expands per row",
+        "Resolution: =AVERAGE([fixed_start_cell]:[current_row_cell])"
+      ]
+    },
+    {
+      "path": [
+        "Problem: Display the calculated average to a fixed number of decimal places",
+        "Action: Apply number formatting (or ROUND) to 3 decimal places",
+        "Observation: Formatting changes display without changing the underlying value; ROUND changes the stored result",
+        "Resolution: Format cells as Number with 3 decimals OR =ROUND(AVERAGE([fixed_start_cell]:[current_row_cell]),3)"
+      ]
+    }
+  ],
+  "id": "43213"
+}

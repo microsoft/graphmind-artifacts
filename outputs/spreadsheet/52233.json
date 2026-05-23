@@ -1,0 +1,14 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return and aggregate values from a 2D table where the lookup column changes by match, while the formula is filled down without shifting the source rows",
+        "Action: Use INDEX with MATCH for dynamic column selection and lock the source table with absolute references; wrap with SUM if multiple rows are returned",
+        "Observation: When filling vertically, relative references can unintentionally shift the source range; anchoring the full data block keeps row boundaries fixed while MATCH selects the correct column",
+        "Resolution: =SUM(INDEX([data_block_fixed],0,MATCH([row_label],[header_row_fixed],0)))"
+      ]
+    }
+  ],
+  "id": "52233"
+}

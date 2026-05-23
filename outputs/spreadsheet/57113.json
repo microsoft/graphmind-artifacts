@@ -1,0 +1,22 @@
+{
+  "domain": "text_manipulation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Extract the Nth tokenized substring from a text field based on a delimiter and return it into adjacent columns",
+        "Action: SUBSTITUTE to expand delimiter into fixed-width blocks + MID with column-indexed start position + TRIM/LEFT/SUBSTITUTE to isolate the token",
+        "Observation: Replacing each delimiter occurrence with a long run of spaces creates predictable fixed-width segments; COLUMNS() provides the 1st/2nd/3rd… segment index when copying across",
+        "Resolution: =TRIM(LEFT(SUBSTITUTE(TRIM(MID(SUBSTITUTE([text_cell],[delimiter],REPT(\" \",[block_size])),[block_size]*COLUMNS([first_output_cell]:[current_output_cell]),[block_size])),\" \",REPT(\" \",[pad_size])),[pad_size]))"
+      ]
+    },
+    {
+      "path": [
+        "Problem: Remove a leading symbol from extracted tokens while leaving headers unchanged",
+        "Action: Use the delimiter itself as the split marker so extracted tokens exclude it; apply formula starting from the first data row only",
+        "Observation: If the split is performed on the symbol (e.g., '#'), the returned segment begins after the symbol, so no additional cleanup is required",
+        "Resolution: Start formula in [output_start_cell] on row [first_data_row] (not header row) and split on [symbol_delimiter] so returned tokens omit the symbol"
+      ]
+    }
+  ],
+  "id": "57113"
+}

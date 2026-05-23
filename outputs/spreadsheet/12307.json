@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Count how many categories (e.g., countries) meet a numeric threshold for each entity (e.g., company) across a matrix of values",
+        "Action: SUMPRODUCT with boolean comparisons and header matching to aggregate qualifying columns/rows",
+        "Observation: Coercing TRUE/FALSE to 1/0 allows multiplying multiple conditions (value>0 AND header matches entity) and summing the results without helper columns",
+        "Resolution: =SUMPRODUCT(([value_row_or_matrix]>[threshold])*([header_range]=[entity_range_or_cell]))"
+      ]
+    }
+  ],
+  "id": "12307"
+}

@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Count non-empty entries in a 2D matrix for a specific row category and a specific column header category (e.g., driver by weekday) across repeated headers",
+        "Action: SUMPRODUCT with boolean array multiplication to apply row match, header match, and non-blank tests simultaneously; optional IF/AND wrapper to suppress output when criteria cells are blank",
+        "Observation: MATCH/INDEX returns only a single intersection, but SUMPRODUCT can aggregate across all columns where the header repeats and count all non-empty cells meeting both row and header criteria",
+        "Resolution: IF(AND([row_criteria_cell]<>\"\",[header_criteria_cell]<>\"\"),SUMPRODUCT(([row_labels_range]=[row_criteria_cell])*([headers_range]=[header_criteria_cell])*([data_matrix_range]<>\"\")),\"\")"
+      ]
+    }
+  ],
+  "id": "57989"
+}

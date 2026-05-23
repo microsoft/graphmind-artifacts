@@ -1,0 +1,22 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Flag rows based on a category value, with an additional condition that related rows in the same group meet a secondary criterion",
+        "Action: IF nested with COUNTIFS to test group-level existence of a secondary category",
+        "Observation: Use structured references (or consistent ranges) to count whether any row sharing the same keys (e.g., date + patient) contains the required companion category; only then flag the target category row",
+        "Resolution: =IF([@Category]=[TargetCategory],IF(COUNTIFS([GroupKey1],[#This Row].[GroupKey1],[GroupKey2],[#This Row].[GroupKey2],[Category],[SecondaryCategory])>0,[FlagValue],\"\"),\"\")"
+      ]
+    },
+    {
+      "path": [
+        "Problem: Ensure a newly added calculated column visually matches the formatting of an adjacent existing column",
+        "Action: Copy/Paste Special (Formats) or Format Painter; alternatively apply the same table column formatting style",
+        "Observation: In Excel Tables, formatting is typically consistent by default, but manual format copy ensures exact match when a new column is inserted or calculated",
+        "Resolution: Apply formatting from [ExistingColumn] to [NewColumn] via PasteSpecial(Formats) or Format Painter"
+      ]
+    }
+  ],
+  "id": "53449"
+}

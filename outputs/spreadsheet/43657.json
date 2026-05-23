@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Count how many cells across multiple non-contiguous ranges contain a specified name (as a substring within comma-separated text)",
+        "Action: SUMPRODUCT with SEARCH wrapped in ISNUMBER to create a boolean match array, then sum results across each target range",
+        "Observation: SEARCH returns a number when the name is found anywhere in the cell text; ISNUMBER converts this to TRUE/FALSE; SUMPRODUCT coerces TRUE/FALSE to 1/0 and sums matches; separate SUMPRODUCT terms are added for each non-contiguous block",
+        "Resolution: =SUMPRODUCT(--ISNUMBER(SEARCH([name_cell],[range_block1])))+SUMPRODUCT(--ISNUMBER(SEARCH([name_cell],[range_block2])))+SUMPRODUCT(--ISNUMBER(SEARCH([name_cell],[range_blockN])))"
+      ]
+    }
+  ],
+  "id": "43657"
+}

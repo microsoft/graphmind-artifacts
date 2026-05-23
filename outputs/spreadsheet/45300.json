@@ -1,0 +1,14 @@
+{
+  "domain": "text_manipulation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Remove all text from a string starting at a specific marker word while keeping the preceding text",
+        "Action: Use FIND to locate the marker position and LEFT to return characters before it",
+        "Observation: This works when the marker text exists in each string; subtracting 1 excludes the marker itself and everything after it",
+        "Resolution: =LEFT([text_cell],FIND([marker_text],[text_cell])-1)"
+      ]
+    }
+  ],
+  "id": "45300"
+}

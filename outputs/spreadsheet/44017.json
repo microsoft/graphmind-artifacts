@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Calculate a time-phased value that applies cumulative step increases starting from an effective date and repeating at a fixed month frequency",
+        "Action: IF gate + YEARFRAC to convert date difference to elapsed months + INDEX to dynamically size the increase range + SUM to accumulate increases + boolean multiplication to suppress pre-effective months",
+        "Observation: When increase percentages are stored sequentially across columns, the number of increases to apply can be derived from elapsed months divided by the frequency, then used to SUM from the first increase through the Nth increase via INDEX",
+        "Resolution: IF([effective_date], [base_value]*(1+SUM([inc_start]:INDEX([inc_start]:[inc_end], (YEARFRAC([effective_date],[period_date])*12/[months_per_period]+1)))*([period_date]>=[effective_date])), \"\")"
+      ]
+    }
+  ],
+  "id": "44017"
+}

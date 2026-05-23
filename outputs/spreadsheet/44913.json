@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return a group-level maximum only on the row(s) where that maximum occurs; otherwise return blank",
+        "Action: Use IF to compare the current row value to an array-calculated MAX over values filtered by a matching group key (MAX with IF as an array formula)",
+        "Observation: MAX(IF([key_range]=[current_key],[value_range])) computes the maximum within the matching group; comparing the current value to that maximum flags only the max row(s) (ties will return the value on each tied row)",
+        "Resolution: =IF([current_value]=MAX(IF([key_range]=[current_key],[value_range])),[current_value],\"\")"
+      ]
+    }
+  ],
+  "id": "44913"
+}

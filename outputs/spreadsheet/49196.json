@@ -1,0 +1,14 @@
+{
+  "domain": "text_manipulation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Reformat a date-time stored as text with one delimiter into another delimiter while preserving the original year and time components",
+        "Action: Use LEFT, MID, FIND, and concatenation to extract day/month/year substrings and append the time substring",
+        "Observation: When the source date-time is consistently structured (dd.mm.yy hh:mm), fixed-position substring extraction reliably rebuilds the desired format without global replace",
+        "Resolution: =[DAY2]&\"/\"&[MONTH2]&\"/\"&[YEAR2]&[TIME_PART] where [DAY2]=LEFT([text_datetime],2), [MONTH2]=MID([text_datetime],4,2), [YEAR2]=MID([text_datetime],7,2), [TIME_PART]=MID([text_datetime],FIND(\" \",[text_datetime]),LEN([text_datetime]))"
+      ]
+    }
+  ],
+  "id": "49196"
+}

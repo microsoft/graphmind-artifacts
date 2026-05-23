@@ -1,0 +1,14 @@
+{
+  "domain": "array_formula",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return a filtered list from a source column while excluding items found in an exclusion list, preserving original order",
+        "Action: Use INDEX with AGGREGATE (SMALL) over ROWs masked by COUNTIF, wrapped in IFERROR and filled down",
+        "Observation: Dividing ROW numbers by a boolean include-mask creates errors for excluded rows; AGGREGATE option 6 ignores errors and returns the nth valid row index in order",
+        "Resolution: =IFERROR(INDEX([source_col],AGGREGATE(15,6,ROW([source_data_range])/(1-COUNTIF([exclude_range],[source_data_range])),ROWS([first_output_cell]:[current_output_cell]))),\"\")"
+      ]
+    }
+  ],
+  "id": "54085"
+}

@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Sum values for rows where a target term appears as an exact whole word within a text field",
+        "Action: Use SEARCH to find the term, pad both term and text with spaces to enforce whole-word matching, wrap with ISNUMBER, and SUM over matching values via IF (array formula)",
+        "Observation: Adding a trailing/leading space to both the lookup term and the text range prevents partial matches (e.g., 'tool' not matching 'tools') when words are space-delimited",
+        "Resolution: =SUM(IF(ISNUMBER(SEARCH([term]&\" \",[text_range]&\" \")),[value_range]))"
+      ]
+    }
+  ],
+  "id": "41265"
+}

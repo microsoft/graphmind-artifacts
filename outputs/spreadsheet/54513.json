@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Calculate a discounted price from an original price and a discount percentage, and format to currency precision",
+        "Action: Multiply original price by (1 - discount) and round to 2 decimals using ROUND",
+        "Observation: Discounts expressed as percentages/decimals are applied by reducing the original price by the discount fraction; rounding ensures standard currency display",
+        "Resolution: ROUND([original_price] * (1 - [discount_rate]), 2)"
+      ]
+    }
+  ],
+  "id": "54513"
+}

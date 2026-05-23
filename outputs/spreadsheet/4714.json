@@ -1,0 +1,30 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Compute a rolling-period average per entity only when a minimum number of periods exists",
+        "Action: COUNTIFS to verify period count within a rolling date window; IF to return fallback text; AVERAGEIFS to calculate conditional average; EDATE to derive rolling window start date",
+        "Observation: A rolling window can be expressed as date criteria between [current_period] and EDATE([current_period],-[window_size-1]); COUNTIFS and AVERAGEIFS can share identical criteria to gate the calculation",
+        "Resolution: IF(COUNTIFS([entity_range],[entity],[date_range],\"<=\"&[current_date],[date_range],\">=\"&EDATE([current_date],-[window_size_minus_1]))<[min_periods],\"n/a\",AVERAGEIFS([value_range],[entity_range],[entity],[date_range],\"<=\"&[current_date],[date_range],\">=\"&EDATE([current_date],-[window_size_minus_1])))"
+      ]
+    },
+    {
+      "path": [
+        "Problem: Flag whether a computed rolling average exceeds a threshold, while preserving non-applicable states",
+        "Action: IF to pass through \"n/a\" or compare numeric result to a threshold",
+        "Observation: When the rolling average formula can return text (e.g., \"n/a\"), the flagging logic must test for non-numeric output before applying a numeric comparison",
+        "Resolution: IF([moving_avg]=\"n/a\",\"n/a\",IF([moving_avg]>[threshold],\"More than \"&[threshold],\"Less than \"&[threshold]))"
+      ]
+    },
+    {
+      "path": [
+        "Problem: Display whole numbers without trailing .0 while keeping decimals when present",
+        "Action: Custom number format to suppress decimals for integers",
+        "Observation: Number formatting can change display without changing underlying values; a conditional decimal format shows 0 decimals for integers and 1+ decimals otherwise",
+        "Resolution: Apply custom format: [=0]0;0.0 (or use 0.## to show up to 2 decimals without trailing zeros)"
+      ]
+    }
+  ],
+  "id": "4714"
+}

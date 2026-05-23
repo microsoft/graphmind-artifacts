@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Sum values in a 2D table constrained by a date range on rows and a time range on columns",
+        "Action: LET + TRANSPOSE to orient headers as a filterable column; FILTER + INDEX to keep only columns whose time headers fall within bounds; DROP to remove header row; FILTER again to keep only rows whose date values fall within bounds; SUM to aggregate",
+        "Observation: When time headers are stored across columns, transposing converts them into a first-column field so they can be filtered with standard row-wise criteria; after filtering columns, a second filter can be applied by date to the remaining matrix",
+        "Resolution: =LET(t,TRANSPOSE([table_with_time_headers_row]), f,FILTER(t,(INDEX(t,,1)>=[time_from])*(INDEX(t,,1)<=[time_to])), data,TRANSPOSE(DROP(f,,1)), dts,[date_column_aligned_to_data_rows], SUM(FILTER(data,(dts>=[date_from])*(dts<=[date_to]))))"
+      ]
+    }
+  ],
+  "id": "31011"
+}

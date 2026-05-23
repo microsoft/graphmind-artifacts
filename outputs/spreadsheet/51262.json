@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Sum values within a date window while filtering by a dynamic list of allowed categories (OR logic) from a specified range",
+        "Action: Use SUMIFS for the date-range criteria and category criterion, then wrap with SUMPRODUCT to aggregate SUMIFS results across a criteria list range",
+        "Observation: SUMIFS does not natively accept a multi-cell criteria range as an OR-list unless coerced into an array calculation; SUMPRODUCT (or equivalent array-enabler) sums the per-criterion SUMIFS outputs",
+        "Resolution: SUMPRODUCT(SUMIFS([sum_range],[date_range],\">=\"&[period_start],[date_range],\"<\"&EDATE([period_start],1),[category_range],[criteria_list_range]))"
+      ]
+    }
+  ],
+  "id": "51262"
+}

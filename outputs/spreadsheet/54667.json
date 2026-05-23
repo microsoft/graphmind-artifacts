@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return a value from the current row when two cells in that row match; otherwise fall back to a lookup result",
+        "Action: Use IF to test equality, return direct cell value if TRUE, else use VLOOKUP; wrap with IFERROR for blank-on-failure",
+        "Observation: A row-level override condition can be evaluated before performing an external lookup, ensuring manual edits take precedence",
+        "Resolution: IFERROR(IF([compare_cell_1]=[compare_cell_2],[same_row_return_cell],VLOOKUP([lookup_value],[lookup_table],[return_col_index],0)),\"\")"
+      ]
+    }
+  ],
+  "id": "54667"
+}

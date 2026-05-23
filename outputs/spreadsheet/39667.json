@@ -1,0 +1,14 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return related fields (e.g., ID and unit) based on a user-entered text key in another table row",
+        "Action: Use INDEX+MATCH to look up a value by exact match on a description column; wrap with IFERROR to return blank when not found or when input is empty",
+        "Observation: Exact-match MATCH works when the entered description matches a unique key in the source list; IFERROR prevents #N/A and supports empty-string output for blank/unmatched inputs",
+        "Resolution: =IFERROR(INDEX([return_column],MATCH([lookup_value],[lookup_column],0)),\"\")"
+      ]
+    }
+  ],
+  "id": "39667"
+}

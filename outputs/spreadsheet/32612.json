@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Populate a label column that returns a special category from a reference list when a date matches, otherwise return a derived weekday label",
+        "Action: Use VLOOKUP for exact-match date lookup wrapped in IFERROR, with TEXT to format non-matching dates as weekday abbreviations",
+        "Observation: Exact-match lookup will error when the date is not found in the holiday table; IFERROR provides a clean fallback to weekday formatting",
+        "Resolution: =IFERROR(VLOOKUP([date_cell],[holiday_table_range],[return_col_index],0),TEXT([date_cell],\"ddd\"))"
+      ]
+    }
+  ],
+  "id": "32612"
+}

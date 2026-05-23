@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Sum values by month based on a date field and return results in a month summary grid, leaving blanks when the total is zero",
+        "Action: SUMIFS with date-range criteria using EOMONTH to define month boundaries, wrapped in IF to suppress zero totals",
+        "Observation: Monthly aggregation can be done by filtering dates between the month start date and the month end date (inclusive); repeating the same pattern across columns sums different measure ranges",
+        "Resolution: IF(SUMIFS([sum_range],[date_range],\">=\"&[month_start_cell],[date_range],\"<=\"&EOMONTH([month_start_cell],0))=0,\"\",SUMIFS([sum_range],[date_range],\">=\"&[month_start_cell],[date_range],\"<=\"&EOMONTH([month_start_cell],0)))"
+      ]
+    }
+  ],
+  "id": "37229"
+}

@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Sum values in one column only for rows that meet a single criterion in another column",
+        "Action: Use SUMIF to conditionally aggregate a sum_range based on a criteria_range and criteria",
+        "Observation: Works when there is one condition; criteria can be a literal value or a cell reference and the criteria_range and sum_range must be aligned (same size/shape)",
+        "Resolution: =SUMIF([criteria_range],[criteria],[sum_range])"
+      ]
+    }
+  ],
+  "id": "46167"
+}

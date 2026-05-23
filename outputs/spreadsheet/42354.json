@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return the first non-error value from a left-to-right range, otherwise return blank",
+        "Action: Use IFNA to suppress #N/A, INDEX to return a value by position, MATCH to find the last valid position via a numeric lookup trick, and ERROR.TYPE to convert errors into numbers",
+        "Observation: MATCH with lookup_value 3 against an array of 1/2 values (from ERROR.TYPE on a filtered COLUMN array) returns the position of the rightmost non-#N/A entry; INDEX then returns that entry, and IFNA blanks the result when all entries are #N/A",
+        "Resolution: =IFNA(INDEX([row_range],MATCH(3,ERROR.TYPE(COLUMN(IF([row_range]<>\"~N/A\",[row_range]))),0)),\"\")"
+      ]
+    }
+  ],
+  "id": "42354"
+}

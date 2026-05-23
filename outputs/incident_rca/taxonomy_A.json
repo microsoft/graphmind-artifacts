@@ -1,0 +1,102 @@
+{
+  "domain": "CLOUDANALYTICS\\ClientExperiences",
+  "taxonomy": [
+    [
+      {
+        "incident_id": "single_incident",
+        "id": "incident_0_single_incident"
+      },
+      {
+        "problem": "Users cannot connect to Lattice SQL pools; logins/handshakes time out or reset, and errors indicate SAS token retrieval failures (moniker not active) and AccessRejectedForUserConnections.",
+        "id": "problem_0_single_incident",
+        "node_label": "SQL pool connections fail due to token errors"
+      },
+      {
+        "action_id": "action_0_single_incident",
+        "actor": "gtorres",
+        "raw_action_string": "Transferred from CloudAnalytics/Connectivity-Security to CloudAnalytics/Client Experiences.",
+        "description": "What: An incident routing/ownership change: the ticket was transferred from the CloudAnalytics/Connectivity-Security team to the CloudAnalytics/Client Experiences team.\nWhy/Purpose: The summary indicates SAS token retrieval failures with a MonikerNotFoundException; transferring to a team better aligned with client experience/connectivity symptoms and to involve DXS for root cause analysis.\nExpected outcome: Get the appropriate owning team engaged to investigate the SAS token retrieval/moniker activation issue and drive resolution.\nActual findings/conclusions: No technical conclusion is stated here beyond the rationale that the failures relate to SAS token retrieval and moniker not active.\nImpact on troubleshooting: Ensured the incident was handled by the team(s) most likely to diagnose and fix the underlying platform/service issue.",
+        "type": "incident_transfer",
+        "id": "action_0_single_incident",
+        "node_label": "Transfer incident to client experiences team"
+      },
+      {
+        "problem": "After transferring to DXS, investigation continues into SAS token retrieval failures (MonikerNotFoundException) and resulting login rejections/connection resets impacting SQL pool connectivity.",
+        "id": "problem_1_single_incident",
+        "node_label": "Investigate moniker token failures causing login resets"
+      },
+      {
+        "action_id": "action_1_single_incident",
+        "actor": "alopez",
+        "raw_action_string": "AppTrace | where MessageText has_all ( '[ANONYMIZED_GUID]' ) | where TIMESTAMP between ( datetime (2023-09-12 00:20:27.6164291).. datetime (2023-09-12 23:20:27.6164291)) | where ProcessName == 'Contoso.Dxs.Service.EntryPoint' | where MarkerName has 'TdsSession' | project TIMESTAMP , RootActivityId , MarkerName",
+        "description": "What: Runs a KQL query against the AppTrace table to find TdsSession-related trace events for a specific workspace identifier within a precise time window, scoped to the DXS service entry point process, and projects timestamp plus RootActivityId (RAID) and marker.\nWhy/Purpose: The engineer was troubleshooting connection/login failures and needed to correlate the failing client/workspace to server-side traces; specifically, to obtain the RootActivityId associated with the TdsSession for later drill-down.\nExpected outcome: Return rows containing the RootActivityId(s) for the workspace during the incident timeframe.\nActual findings/conclusions: The ticket notes the query returned a schema including [TIMESTAMP, RootActivityId, MarkerName], implying results were obtained and RootActivityId was available for follow-up.\nImpact on troubleshooting: Produced the RootActivityId needed to pivot into a deeper trace query (next action) and later extract activity/connection context.",
+        "type": "kql_query",
+        "possible_outcome": "AppTrace query returned columns [TIMESTAMP, RootActivityId, MarkerName], enabling identification of relevant RootActivityIds for the failing sessions.",
+        "id": "action_1_single_incident",
+        "node_label": "Query AppTrace for TdsSession RootActivityId"
+      },
+      {
+        "action_id": "action_2_single_incident",
+        "actor": "alopez",
+        "raw_action_string": "AppTrace | where RootActivityId in ( '[ANONYMIZED_GUID]' ) | project TIMESTAMP , Severity , RootActivityId , ProcessName , MarkerName , ThreadId , MessageText",
+        "description": "What: Queries AppTrace again, this time filtering by RootActivityId (RAID) to retrieve detailed trace messages (severity, process, marker, thread, message text) for that activity.\nWhy/Purpose: After identifying the relevant RootActivityId from the prior AppTrace search, the engineer drilled into the full trace context to understand what happened during the failing session.\nExpected outcome: Detailed trace lines for the specific RootActivityId to reveal errors or authentication/connection handling details.\nActual findings/conclusions: The ticket notes the query returned a schema including [TIMESTAMP, Severity, RootActivityId, ProcessName, MarkerName, ThreadId, MessageText], indicating trace details were retrieved and used to proceed (later they extracted an Activity id from the prior Kusto result).\nImpact on troubleshooting: Enabled extraction of lower-level connection diagnostics (e.g., activity/connection identifiers) used to pivot into SQL/Auth logs.",
+        "type": "kql_query",
+        "trigger_observation": "AppTrace query returned columns [TIMESTAMP, RootActivityId, MarkerName], enabling identification of relevant RootActivityIds for the failing sessions.",
+        "possible_outcome": "AppTrace drill-down query returned columns including [Severity, ProcessName, MessageText], allowing deeper inspection of the failing login/session trace details.",
+        "id": "action_2_single_incident",
+        "node_label": "Drill into AppTrace using RootActivityId"
+      },
+      {
+        "action_id": "action_3_single_incident",
+        "actor": "alopez",
+        "raw_action_string": "AuthLogin\n| where TIMESTAMP > ago (10d)\n| where peer_activity_id == \"[ANONYMIZED_GUID]\"\n| project TIMESTAMP , logical_server_name , connection_id , connection_peer_id , instance_name , server_name , ClusterName , AppName , state_desc",
+        "description": "What: Queries the AuthLogin table for the last 10 days and filters to a specific peer_activity_id (activity id), projecting connection/server metadata and state.\nWhy/Purpose: The engineer observed AccessRejectedForUserConnections in SQL logs and used the Activity id (noted as coming from the previous Kusto result) to locate the corresponding authentication/login record(s) and determine where/why the connection was rejected.\nExpected outcome: AuthLogin entries tied to the specific activity id, showing server/cluster/app and the rejection state.\nActual findings/conclusions: The ticket states they see AccessRejectedForUserConnections when checking SQL logs; the query returned a schema including state_desc, implying they retrieved relevant login records for analysis.\nImpact on troubleshooting: Correlated the client-side failure to server-side authentication rejection events, supporting escalation/transfer to the connectivity/security team.",
+        "type": "kql_query",
+        "trigger_observation": "AppTrace drill-down query returned columns including [Severity, ProcessName, MessageText], allowing deeper inspection of the failing login/session trace details.",
+        "possible_outcome": "AuthLogin query returned columns including [logical_server_name, connection_id, ClusterName, AppName, state_desc], supporting verification of AccessRejectedForUserConnections during login.",
+        "id": "action_3_single_incident",
+        "node_label": "Query AuthLogin by activity ID for rejection"
+      },
+      {
+        "action_id": "action_4_single_incident",
+        "actor": "alopez",
+        "raw_action_string": "Transferred from CloudAnalytics/Client Experiences to CloudAnalytics/Connectivity-Security.",
+        "description": "What: Incident ownership/routing transfer.\nWhy/Purpose: After observing AccessRejectedForUserConnections during connection attempts (suggesting an auth/connectivity/security gate rather than an application-only issue), the engineer transferred the incident to the team best suited to investigate connection rejection causes.\nExpected outcome: The receiving team (Connectivity-Security) would validate why connections are being rejected and take remediation steps.\nActual findings/conclusions: Transfer itself indicates the investigation concluded the issue likely falls under connectivity/security controls.\nImpact on troubleshooting: Ensured the incident was handled by the appropriate specialized team to resolve AccessRejectedForUserConnections.",
+        "type": "incident_transfer",
+        "trigger_observation": "AuthLogin query returned columns including [logical_server_name, connection_id, ClusterName, AppName, state_desc], supporting verification of AccessRejectedForUserConnections during login.",
+        "possible_outcome": "Request raised to verify why connections are rejected with AccessRejectedForUserConnections; no direct outcome captured in the transcript.",
+        "id": "action_4_single_incident",
+        "node_label": "Transfer incident to connectivity security team"
+      },
+      {
+        "action_id": "action_5_single_incident",
+        "actor": "sashok",
+        "raw_action_string": "select @@version",
+        "description": "What: Runs a simple SQL statement to return the SQL Server version string from the connected workspace/instance.\nWhy: Suggested as a lightweight connectivity/health check before running stress workloads, to ensure the workspace is active and accepting connections.\nPurpose: Validate that SSMS can successfully connect and execute a trivial query, indicating the workspace is operational.\nExpected outcome: A successful result containing the server/version information; if it fails, retry until it succeeds.\nActual findings/conclusions: No specific result is recorded in the ticket text; it is presented as recommended procedure.\nImpact on troubleshooting: Helps distinguish workspace activation/connectivity issues from workload-related failures and reduces risk of running stress while the workspace is not fully active.",
+        "type": "sql_query",
+        "trigger_observation": "Request raised to verify why connections are rejected with AccessRejectedForUserConnections; no direct outcome captured in the transcript.",
+        "possible_outcome": "Proposed validation step: use SSMS to run a simple query to confirm workspace is active before stress runs; no execution result recorded.",
+        "id": "action_5_single_incident",
+        "node_label": "Run select @@version to validate connectivity"
+      },
+      {
+        "action_id": "action_6_single_incident",
+        "actor": "stanaka",
+        "raw_action_string": "AuthLogin | where ClientConnectionId == '11111111-aaaa-bbbb-cccc-111111111111' | project TIMESTAMP, error, state",
+        "description": "What: Queries the AuthLogin telemetry/table, filtering to a specific ClientConnectionId, and projects timestamp plus error/state fields.\nWhy: Executed to confirm why a particular session/connection was rejected (i.e., to retrieve the rejection reason associated with that connection attempt).\nPurpose: Diagnose the failing login/session by looking up authentication/login records tied to the provided ClientConnectionId.\nExpected outcome: Rows showing the relevant login attempt(s) with associated error and state, enabling identification of the rejection reason.\nActual findings/conclusions: The text states it was run \"to confirm the connection rejection reason\" but does not include the returned error/state values.\nImpact on troubleshooting: Narrows the investigation to an authentication/authorization/resource-access rejection cause for the specific failing connection, supporting root-cause tracking of the \"zombie SQL\" login failure scenario.\n\nKQL literal-value dependency analysis:\n- Literal values found in predicates: ClientConnectionId == '11111111-aaaa-bbbb-cccc-111111111111'\n- Backward scan: No earlier extracted action in this ticket reports discovering this ClientConnectionId; it is introduced directly here.\n- Dependency: none.",
+        "type": "kql_query",
+        "trigger_observation": "Proposed validation step: use SSMS to run a simple query to confirm workspace is active before stress runs; no execution result recorded.",
+        "possible_outcome": "AuthLogin lookup was run for a failing ClientConnectionId to confirm the rejection reason; specific lookup output not captured.",
+        "id": "action_6_single_incident",
+        "node_label": "Query AuthLogin by ClientConnectionId for reason"
+      },
+      {
+        "action_id": "action_mitigation_0_single_incident",
+        "type": "mitigation",
+        "cause": "Disabling SQL frontend auto-deactivation can leave the FE up while DXS assumes inactivity and evicts the moniker; then DXS stops handing back tokens, leading to SAS token retrieval failures and subsequent AccessRejectedForUserConnections ('Only backend connections are allowed').",
+        "id": "action_mitigation_0_single_incident",
+        "node_label": "Re-enable frontend auto-deactivation to prevent moniker eviction"
+      }
+    ]
+  ]
+}

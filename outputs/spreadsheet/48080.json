@@ -1,0 +1,14 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return every nth value from a source column into a new list (optionally starting from a specific first row)",
+        "Action: Use INDEX to fetch a value by a calculated row number; use ROWS to generate an incrementing counter when filled down",
+        "Observation: ROWS([anchor]:current_row) increments by 1 per output row, enabling a linear sequence that can be scaled by n and offset by a start position",
+        "Resolution: =INDEX([source_column], (ROWS([first_output_row_anchor]:[current_output_row]) - 1) * [n] + [start_row])"
+      ]
+    }
+  ],
+  "id": "48080"
+}

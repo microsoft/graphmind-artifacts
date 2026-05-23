@@ -1,0 +1,38 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Sum values for a category within a custom day window (non-midnight 24-hour boundary) and allow copying across columns via header-driven criteria",
+        "Action: SUMPRODUCT with multiple boolean criteria (category match + datetime between start/end) using header cell as the category selector",
+        "Observation: When date and time are stored separately, adding them creates a comparable datetime serial that can be filtered with >= and > boundaries; using a header reference makes the formula horizontally fillable",
+        "Resolution: SUMPRODUCT(([CategoryRange]=[HeaderCategory])*(([DateRange]+[TimeRange])>=[RowDate]+[StartOffset])*[ValueRange])"
+      ]
+    },
+    {
+      "path": [
+        "Problem: Compute windowed totals using cumulative subtraction (sum through end boundary minus sum beyond end boundary) to isolate a 24-hour slice",
+        "Action: Two SUMPRODUCT calculations subtracted: (>= start) minus (> end) to yield values within [start, end]",
+        "Observation: Subtracting the cumulative sum after the end boundary removes all later transactions, leaving only those between the start and end; using > for the end avoids double-counting boundary timestamps",
+        "Resolution: "
+      ]
+    },
+    {
+      "path": [
+        "Problem: Use the next row’s date as the end boundary and suppress calculation on the last row when no next date exists",
+        "Action: IF/IFERROR gate around the window calculation, testing whether [NextRowDate] is nonblank (or numeric) before evaluating",
+        "Observation: Referencing the next row provides a dynamic end date per row; guarding prevents invalid end boundaries and avoids returning misleading totals on the final date",
+        "Resolution: IF(ISNUMBER([NextRowDate]), [WindowSumStartToEnd], \"\")"
+      ]
+    },
+    {
+      "path": [
+        "Problem: Change number format of a target range from Accounting to Currency",
+        "Action: Apply Currency number format to the specified range via Format Cells (or Home > Number > Currency)",
+        "Observation: Formatting is independent of the calculation logic and can be applied after formulas are in place without affecting results",
+        "Resolution: Apply number format \"Currency\" to [TargetRange]"
+      ]
+    }
+  ],
+  "id": "37456"
+}

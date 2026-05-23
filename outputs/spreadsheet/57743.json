@@ -1,0 +1,14 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Retrieve a corresponding value from a reference table by matching a key from another list, and return blank when no match exists",
+        "Action: Use VLOOKUP with exact match wrapped in IFNA (or IFERROR) to suppress #N/A",
+        "Observation: Exact-match lookups return #N/A when the key is missing; wrapping the lookup allows a clean blank output while preserving valid matches",
+        "Resolution: =IFNA(VLOOKUP([lookup_key],[table_range_with_key_in_first_column],[return_column_index],0),\"\")"
+      ]
+    }
+  ],
+  "id": "57743"
+}

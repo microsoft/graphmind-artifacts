@@ -1,0 +1,14 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Retrieve an intersecting value from a 2D table using a row identified by multiple criteria and a column identified by a header label",
+        "Action: INDEX with two MATCH functions; use concatenation in MATCH to create a multi-criteria row lookup (array evaluation)",
+        "Observation: When the row key is defined by more than one field (e.g., Work + Material), concatenating the criteria and the corresponding columns allows MATCH to find the correct row; a second MATCH locates the correct category column by header text",
+        "Resolution: INDEX([value_matrix], MATCH([crit1]&[crit2], [crit1_range]&[crit2_range], 0), MATCH([header_crit], [header_row], 0))"
+      ]
+    }
+  ],
+  "id": "18935"
+}

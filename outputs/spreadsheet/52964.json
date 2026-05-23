@@ -1,0 +1,22 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Find a record by key in a lookup table and return the difference between two fields from the matched row",
+        "Action: Use VLOOKUP to retrieve two different columns from the same matched row, then subtract; wrap with IF/AND and IFERROR to suppress missing/invalid results",
+        "Observation: This works when the lookup key is in the first column of the lookup range and the desired return columns are to the right; COUNTIF (or IFERROR around VLOOKUP) can be used to avoid errors when the key is absent",
+        "Resolution: IFERROR(IF(AND(COUNTIF([key_col],[key])>0, VLOOKUP([key],[table_firstcol:table_lastcol],[col_index_1],FALSE)>0), VLOOKUP([key],[table_firstcol:table_lastcol],[col_index_1],FALSE)-VLOOKUP([key],[table_firstcol:table_lastcol],[col_index_2],FALSE),\"\"),\"\")"
+      ]
+    },
+    {
+      "path": [
+        "Problem: Explain array constants used to select multiple columns and apply signs when combining multiple looked-up values",
+        "Action: Use SUMPRODUCT with VLOOKUP returning multiple columns via an array constant and multiply by a sign array constant",
+        "Observation: An array constant like {i,j} makes VLOOKUP return multiple column values at once; a sign array like {-1,1} applies subtraction/addition to those returned values so SUMPRODUCT can combine them into a single result",
+        "Resolution: SUMPRODUCT(VLOOKUP([key],[table_firstcol:table_lastcol],{[col_index_subtract],[col_index_add]},FALSE)*{-1,1})"
+      ]
+    }
+  ],
+  "id": "52964"
+}

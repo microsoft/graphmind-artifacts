@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Aggregate (sum) a numeric measure for each category value to support downstream weighted-average calculations",
+        "Action: SUMIFS to sum a measure range filtered by a matching category/period criterion",
+        "Observation: When the output table lists unique category values (e.g., FY) that exist in the source table, SUMIFS can return the total weight (e.g., total generation) per category as the basis for weighting other averages",
+        "Resolution: SUMIFS([sum_range],[criteria_range1],[criteria_value1],[criteria_range2],[criteria_value2],...)"
+      ]
+    }
+  ],
+  "id": "183-8"
+}

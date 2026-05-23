@@ -1,0 +1,14 @@
+{
+  "domain": "array_formula",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Extract unique digits from a text/number string, sort them ascending, and spill them horizontally one per cell with blanks for missing positions",
+        "Action: Use FIND to test presence of each candidate digit, build an array of present digits, return the k-th smallest via SMALL, and suppress errors with IFERROR (entered/copied across columns and down rows)",
+        "Observation: Testing against a fixed digit list (0–9) converts the string into a boolean mask of which digits exist; SMALL with an increasing k (from the column position) outputs the sorted unique digits without needing explicit de-duplication",
+        "Resolution: IFERROR(SMALL(IF(NOT(ISERR(FIND([digit_list],[text_cell]))),[digit_list]),[k]),\"\") where [digit_list]=ROW($1:$10)-1 (0–9) and [k]=COLUMN([first_output_cell]) adjusted as copied right"
+      ]
+    }
+  ],
+  "id": "41420"
+}

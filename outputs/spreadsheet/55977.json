@@ -1,0 +1,14 @@
+{
+  "domain": "date_time",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Derive the weekday name from a date value without changing cell formatting",
+        "Action: TEXT function with a weekday display format code (e.g., \"DDD\" or \"DDDD\")",
+        "Observation: When a cell is formatted as a date/time serial, using TEXT returns the desired weekday label as text regardless of the cell's existing number format; this avoids issues where a numeric weekday result is being displayed as a date due to formatting",
+        "Resolution: TEXT([date_cell],\"DDD\")"
+      ]
+    }
+  ],
+  "id": "55977"
+}

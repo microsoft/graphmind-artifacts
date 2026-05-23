@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Generate a running sequence number that increments only for rows meeting a condition, otherwise return 0 (and optionally keep blanks blank)",
+        "Action: IF for branching + COUNTIF over an expanding range to create a conditional running count",
+        "Observation: A cumulative COUNTIF from the first row to the current row returns the nth occurrence of the criteria, which serves as the sequential ID for qualifying rows",
+        "Resolution: =IF([trigger_cell]=\"\",\"\",IF([trigger_cell]=[no_value],0,COUNTIF([trigger_range_start]:[trigger_cell],[yes_value])))"
+      ]
+    }
+  ],
+  "id": "49857"
+}

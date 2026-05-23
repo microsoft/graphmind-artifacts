@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Sum values for all records that match a given category/label regardless of other fields",
+        "Action: Use SUMIF to aggregate a numeric range based on a single criteria range and criteria value",
+        "Observation: Lookup functions (e.g., XLOOKUP) return a single match, while SUMIF aggregates across all matching rows",
+        "Resolution: =SUMIF([criteria_range],[criteria],[sum_range])"
+      ]
+    }
+  ],
+  "id": "49945"
+}

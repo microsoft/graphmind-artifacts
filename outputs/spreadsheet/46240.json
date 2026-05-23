@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return different status text based on whether a cell contains a date/number, specific keywords, or is blank",
+        "Action: Nested IF with OR plus ISNUMBER and direct text comparisons",
+        "Observation: Dates are stored as numbers in Excel, so ISNUMBER detects valid dates; OR allows treating either a date/number or a specific word as the same outcome; subsequent IFs handle explicit exceptions (e.g., 'N/A') and blanks",
+        "Resolution: IF(OR(ISNUMBER([cell]),[cell]=\"Yes\"),\"Yes\",IF([cell]=\"N/A\",\"N/A\",IF([cell]=\"\",\"No\",\"\")))"
+      ]
+    }
+  ],
+  "id": "46240"
+}

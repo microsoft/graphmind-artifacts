@@ -1,0 +1,14 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Sum values for a category using exact text matching (avoid partial/substring matches)",
+        "Action: Use MATCH with exact match (match_type=0) wrapped in ISNUMBER inside SUMPRODUCT to filter and sum corresponding values",
+        "Observation: SEARCH-based criteria matches substrings (e.g., 'Travel Agency' found within 'Online Travel Agency'); MATCH with 0 enforces whole-cell equality against a list of valid categories",
+        "Resolution: =IF([criteria_cell]=\"\",\"\",SUMPRODUCT(ISNUMBER(MATCH([category_range],[criteria_cell],0))*[sum_range]))"
+      ]
+    }
+  ],
+  "id": "37554"
+}

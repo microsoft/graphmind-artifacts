@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Sum values for rows where a date falls within a target month",
+        "Action: SUMPRODUCT with MONTH to create a boolean include/exclude mask multiplied by the values to sum",
+        "Observation: Converting the date range to month numbers enables month-based matching without needing start/end-of-month boundaries; TRUE/FALSE coerces to 1/0 inside SUMPRODUCT",
+        "Resolution: =SUMPRODUCT((MONTH([date_range])=[target_month_number])*[sum_range])"
+      ]
+    }
+  ],
+  "id": "57590"
+}

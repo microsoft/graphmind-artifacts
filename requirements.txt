@@ -1,0 +1,9 @@
+pocketflow
+openai>=1.0
+beautifulsoup4
+dirtyjson
+networkx
+numpy
+scikit-learn
+jupyter
+nbformat

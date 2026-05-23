@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Aggregate numeric values by grouping text keys that share a common prefix (e.g., first character/category code)",
+        "Action: Use SUMIF with a wildcard criteria built from the group label",
+        "Observation: Wildcards allow matching all text entries that start with the same prefix without extracting the prefix into a helper column",
+        "Resolution: =SUMIF([text_key_range],[group_label_cell]&\"*\",[sum_range])"
+      ]
+    }
+  ],
+  "id": "44628"
+}

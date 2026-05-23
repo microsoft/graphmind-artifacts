@@ -1,0 +1,132 @@
+{
+  "domain": "CLOUDANALYTICS\\Connectivity-Security",
+  "taxonomy": [
+    [
+      {
+        "incident_id": "single_incident",
+        "id": "incident_0_single_incident"
+      },
+      {
+        "problem": "Automated stress-test SQL connections to the workspace time out (Cannot create PoolableConnectionFactory / ResponseCode null 0) while manual connections succeed; need to triage login failures.",
+        "id": "problem_0_single_incident",
+        "node_label": "Automated SQL stress-test timeouts despite manual success"
+      },
+      {
+        "action_id": "action_0_single_incident",
+        "actor": "lsanderson",
+        "raw_action_string": "let starttime = datetime (2023-08-20 10:06:01); let endtime = datetime (2023-09-20 10:10:22); AuthLogin | where LogicalServerName == \"[ANONYMIZED_GUID]\" | where event == \\'process_login_finish\\' | where not ( is_success ) | summarize count () by error",
+        "description": "What: A KQL investigation that defines a time window (starttime/endtime) around the failing pipeline run and queries the AuthLogin table for unsuccessful login events on a specific LogicalServerName, then summarizes counts by error code.\nWhy: The engineer suspected the pipeline failures might correlate with authentication/login failures during the run window and wanted to see if there was a spike or specific error codes.\nPurpose: Determine whether automated connection failures were due to login/auth issues (and which SQL/auth error codes were occurring) during the relevant timeframe.\nExpected outcome: A breakdown of failed login attempts by error code for the target server during the run window.\nActual findings/conclusions: The ticket text notes “many login failures” and shows counts for errors (18456 and 19732), but also states they couldn’t yet tell what caused them or which corresponded to the pipeline run.\nImpact on troubleshooting: Established that login failures were present in the timeframe and provided error-code distribution to guide further narrowing (e.g., mapping to specific failure modes).",
+        "type": "kql_query",
+        "possible_outcome": "KQL shows many failed AuthLogin events in the window, dominated by error code 18456 (620) with some 19732 (10).",
+        "id": "action_0_single_incident",
+        "node_label": "Summarize failed AuthLogin errors during run window"
+      },
+      {
+        "action_id": "action_1_single_incident",
+        "actor": "ttodd",
+        "raw_action_string": "AppTrace | where * has \"[ANONYMIZED_GUID]\" | distinct RootActivityId",
+        "description": "What: A KQL query against AppTrace searching for any records containing a specific GUID (the connection identifier mentioned in the incident context), then returning distinct RootActivityId values.\nWhy: To map the provided connection identifier to a RootActivityId so subsequent tracing can be scoped to the exact activity.\nPurpose: Identify the root activity associated with the problematic connection attempt.\nExpected outcome: One or more RootActivityId values linked to the GUID.\nActual findings/conclusions: The text shows it returned a RootActivityId (displayed as [ANONYMIZED_GUID]).\nImpact on troubleshooting: Produced the RootActivityId needed to drill into detailed trace events in the next query.\n\nDependency analysis (literal values): predicate literal \"[ANONYMIZED_GUID]\" (search term). This GUID is referenced in the narrative as “this connection ID”, but no prior extracted action is described as having discovered it; it originates from the repro/error message context, so no hard dependency on a prior action output is established.",
+        "type": "kql_query",
+        "trigger_observation": "KQL shows many failed AuthLogin events in the window, dominated by error code 18456 (620) with some 19732 (10).",
+        "possible_outcome": "KQL returns a RootActivityId associated with the provided ClientConnectionId GUID.",
+        "id": "action_1_single_incident",
+        "node_label": "Find RootActivityId from connection identifier in AppTrace"
+      },
+      {
+        "action_id": "action_2_single_incident",
+        "actor": "ttodd",
+        "raw_action_string": "AppTrace | where RootActivityId == \"[ANONYMIZED_GUID]\" | project TIMESTAMP, Severity, ServiceName, MarkerName, DurationMs, ExecutionContext, RolloutFQDN, MessageText",
+        "description": "What: A follow-up KQL query on AppTrace filtering to a specific RootActivityId and projecting detailed columns (timestamp, severity, service/marker, duration, execution context, rollout FQDN, message text).\nWhy: After identifying the RootActivityId, the engineer needed the detailed trace timeline to understand where/why the connection failed.\nPurpose: Drill into the end-to-end trace events for the failing connection attempt.\nExpected outcome: Detailed trace records for that RootActivityId to pinpoint failing component (e.g., gateway/backendhost) and error details.\nActual findings/conclusions: The ticket doesn’t explicitly state the trace conclusions here, only that Quinn would follow up; later notes mention SST failing at backendhost with error 17830, but that conclusion is tied to the SST tool usage rather than explicitly to this query’s output.\nImpact on troubleshooting: Provided the detailed telemetry needed for component-level diagnosis.\n\nDependency analysis (literal values): predicate literal RootActivityId == \"[ANONYMIZED_GUID]\". This RootActivityId value was obtained from the immediately preceding AppTrace distinct query.\n→ Hard dependency: uses RootActivityId discovered in action_1.",
+        "type": "kql_query",
+        "trigger_observation": "KQL returns a RootActivityId associated with the provided ClientConnectionId GUID.",
+        "possible_outcome": "No result/output captured from this step, so the RootActivityId correlation outcome is unclear.",
+        "id": "action_2_single_incident",
+        "node_label": "Inspect detailed AppTrace timeline for RootActivityId"
+      },
+      {
+        "action_id": "action_3_single_incident",
+        "actor": "qchen",
+        "raw_action_string": "test-merged-troubleshooter.example.net/?instanceType=Lattice&region=Intstg&instanceName=[ANONYMIZED_GUID]&type=LatticeConnectivity&ClientConnectionId=[ANONYMIZED_GUID]",
+        "description": "What: A URL to the SST (SQL/support troubleshooting) connectivity test page, parameterized with instanceType=Lattice, region=Intstg, instanceName, and ClientConnectionId.\nWhy: To run an automated connectivity diagnostic for the specific failing ClientConnectionId in INTSTG.\nPurpose: Validate where the connection fails in the backend path (e.g., gateway vs backendhost) and capture the specific error code/state and timing.\nExpected outcome: A connectivity test result indicating the failing hop and error details.\nActual findings/conclusions: The text states it “failed at backendhost, with error 17830 after 8 second.”\nImpact on troubleshooting: Confirmed the failure location (backendhost) and error code (17830), helping focus investigation on gateway/backendhost/DXS contention rather than generic client-side issues.",
+        "type": "dashboard_url",
+        "trigger_observation": "No result/output captured from this step, so the RootActivityId correlation outcome is unclear.",
+        "possible_outcome": "SST investigation indicates the failure occurred at backendhost with error 17830 after ~8 seconds.",
+        "id": "action_3_single_incident",
+        "node_label": "Run SST connectivity test for failing connection"
+      },
+      {
+        "action_id": "action_4_single_incident",
+        "actor": "mkim",
+        "raw_action_string": "AuthLogin | where resource_group == \"LatticeSqlResourceGroup\" | where originalEventTimestamp >= ago (20d) | where error == 17830 and state == 105",
+        "description": "What: A KQL query on AuthLogin scoped to a specific resource_group, time range (last 20 days), and filtering for error 17830 with state 105.\nWhy: The engineer wanted to determine whether the 17830/105 errors were present in AuthLogin telemetry for the Lattice SQL resource group (and potentially whether they were fabric-related), and to find recent occurrences.\nPurpose: Confirm presence/absence of the specific timeout error signature in INTSTG logs.\nExpected outcome: Matching AuthLogin records showing occurrences of error 17830 state 105.\nActual findings/conclusions: The engineer reports no results from this query in INTSTG.\nImpact on troubleshooting: Suggested either the error isn’t captured in AuthLogin for this scenario/product, the filters/time window were insufficient, or the issue manifests elsewhere—prompting request for newer repros and alternative telemetry sources.\n\nDependency analysis (literal values): resource_group == \"LatticeSqlResourceGroup\"; ago(20d); error == 17830; state == 105. These values are not stated as being discovered by earlier extracted actions; they come from the known error signature and environment context, so no hard dependency is established.",
+        "type": "kql_query",
+        "trigger_observation": "SST investigation indicates the failure occurred at backendhost with error 17830 after ~8 seconds.",
+        "possible_outcome": "Query for 17830/105 evidence in INTSTG returns no results, suggesting either wrong signal/source or missing repro timeframe.",
+        "id": "action_4_single_incident",
+        "node_label": "Search AuthLogin for error 17830 state 105"
+      },
+      {
+        "action_id": "action_5_single_incident",
+        "actor": "mkim",
+        "raw_action_string": "analytics-sql-troubleshooter.example.net/?instanceType=Lattice&region=Intstg&instanceName=[ANONYMIZED_GUID]&type=Connection+Overview&ClientConnectionId=[ANONYMIZED_GUID]",
+        "description": "What: A URL to an analytics SQL troubleshooter “Connection Overview” page, parameterized for Lattice in Intstg with instanceName and ClientConnectionId.\nWhy: To review a consolidated connection overview for the specific ClientConnectionId from recent repros when AuthLogin did not show matching 17830/105 entries.\nPurpose: Gather additional diagnostics/telemetry about the connection attempt(s) and failure patterns.\nExpected outcome: A dashboard view summarizing connection lifecycle, errors, and related telemetry for that ClientConnectionId.\nActual findings/conclusions: The text does not include the dashboard’s results; it only notes these repros were older than the DXS fix and asks for newer repros.\nImpact on troubleshooting: Provided an alternate diagnostic path/tool to inspect connection behavior when standard AuthLogin queries were inconclusive.",
+        "type": "dashboard_url",
+        "trigger_observation": "Query for 17830/105 evidence in INTSTG returns no results, suggesting either wrong signal/source or missing repro timeframe.",
+        "possible_outcome": "Additional incident/repro reference is gathered to find newer occurrences after the DXS fix.",
+        "id": "action_5_single_incident",
+        "node_label": "Review Connection Overview dashboard for failing session"
+      },
+      {
+        "action_id": "action_6_single_incident",
+        "actor": "mkim",
+        "raw_action_string": "let myClientConnectionIds = (cluster(' https://northstardev.eastus.kusto.example.net/').database(\"sqlcloud1\").NorthstarTpcdsDaily | where originalEventTimestamp > ago(10d) | where success == \"false\" | where responseMessage contains 'ClientConnectionId' | extend index_f = indexof(responseMessage,\"ClientConnectionId\") | extend ClientConnectionId = toupper(substring(responseMessage, index_f + 19, 36)) | summarize by ClientConnectionId); let connIds = ( AuthLogin | where connection_peer_id in (myClientConnectionIds) | distinct connection_id ); AuthLogin | where connection_id in (connIds) | where package == 'xdbgateway' and event == 'process_login_finish' | extend RowColor = case(isnotempty(error) and isnotnull(error) and error != 0, 'red', 'green') | where error == 17830 and state == 105 | project originalEventTimestamp, package, event, is_success, error, state, state_desc, lookup_state, total_time_ms, activation_time_ms, message, RowColor, connection_id",
+        "description": "What: A multi-stage KQL investigation that (1) queries the NorthstarTpcdsDaily dataset in the sqlcloud1 database on the northstardev cluster to extract ClientConnectionIds from failed events, (2) maps those to AuthLogin connection_id values via connection_peer_id, and (3) filters AuthLogin for xdbgateway process_login_finish events with error 17830 and state 105, projecting timing and diagnostic fields.\nWhy/Purpose: Executed because Pamela shared it as the query to “collect cases” and validate whether error 17830/state 105 still exists after the DXS fix.\nExpected outcome: Identify recent failing gateway login cases (error 17830, state 105) and list their details (timestamps, timings, message, connection_id) for further triage.\nActual findings/conclusions: The ticket text states “We can see cases still exist,” indicating the query returned matching failures.\nImpact on troubleshooting: Confirmed the issue persisted and provided concrete connection identifiers and event details to continue deeper investigation.",
+        "type": "kql_query",
+        "trigger_observation": "Additional incident/repro reference is gathered to find newer occurrences after the DXS fix.",
+        "possible_outcome": "Using Pamela's query, cases still exist (recent occurrences implied), indicating the issue persists and needs deeper investigation.",
+        "id": "action_6_single_incident",
+        "node_label": "Extract recent failing ClientConnectionIds and map to AuthLogin"
+      },
+      {
+        "action_id": "action_7_single_incident",
+        "actor": "mkim",
+        "raw_action_string": "AuthLogin | where connection_id == '[ANONYMIZED_GUID]'",
+        "description": "What: Another KQL query against AuthLogin in INTSTG filtering by a (different) specific connection_id value.\nWhy/Purpose: Same investigation thread as the prior lookup, but for the second example case mentioned (also ~5 seconds netread time) to compare timing/extra-info fields.\nExpected outcome: Retrieve the AuthLogin record for the second connection_id to see whether the delay is attributed to SNI read async or other phases.\nActual findings/conclusions: The text notes netread_time_ms 5333 and highlights <Error_SniReadAsync>10038</Error_SniReadAsync> as the longest period in extra info for this case.\nImpact on troubleshooting: Enabled comparison across two failing sessions and supported the ongoing analysis of where the perceived timeout occurs.",
+        "type": "kql_query",
+        "trigger_observation": "Using Pamela's query, cases still exist (recent occurrences implied), indicating the issue persists and needs deeper investigation.",
+        "possible_outcome": "Recent cases show ~5s netread_time_ms with SNI read/read-async errors (e.g., Error_SniRead 1236, Error_SniReadAsync 10038), initially suggesting a 5s gateway timeout during login.",
+        "id": "action_7_single_incident",
+        "node_label": "Inspect AuthLogin details for specific connection_id"
+      },
+      {
+        "action_id": "action_8_single_incident",
+        "actor": "rblake",
+        "raw_action_string": "let rSet = AppTrace | where TIMESTAMP between ( datetime (2024-01-22).. datetime (2024-01-24)); rSet | where MarkerName has \"tdsproxy\" and MessageText has_any ( '[ANONYMIZED_GUID]' , '[ANONYMIZED_GUID]' ) | distinct RootActivityId , RolloutFQDN | join kind = rightsemi rSet on RootActivityId , RolloutFQDN | where ProcessName in ( \"Contoso.ASPaaS.FrontEnd.Service\" , \"Contoso.Dxs.Service.EntryPoint\" ) | project TIMESTAMP , Node , ProcessName , ProcessId , RootActivityId , RolloutFQDN , SourceNamespace , Severity , MarkerName , DurationMs , MessageText | order by TIMESTAMP asc",
+        "description": "What: KQL query over AppTrace scoped to a time window (2024-01-22..2024-01-24), filtering for tdsproxy markers and messages containing either of two GUIDs, extracting RootActivityId/RolloutFQDN, joining back to the same dataset to keep correlated traces, filtering to specific processes, projecting key trace fields, and ordering by timestamp.\nWhy/Purpose: Ryan Blake used this to demonstrate that the issue should be tracked via peer connection id and to validate whether there was actual connectivity slowdown versus gateway behavior after LOGIN7.\nExpected outcome: Produce correlated end-to-end trace entries showing connection timing (DNS/TCP/TLS/prelogin) and subsequent gateway behavior for the two problematic IDs.\nActual findings/conclusions: The text concludes “There is no connectivity slowdown” and asserts the gateway is “choking after LOGIN7 is sent and killing the connection” instead of returning a redirect token.\nImpact on troubleshooting: Shifted diagnosis away from network latency and toward gateway/login handling (post-LOGIN7), guiding where to focus remediation.",
+        "type": "kql_query",
+        "trigger_observation": "Recent cases show ~5s netread_time_ms with SNI read/read-async errors (e.g., Error_SniRead 1236, Error_SniReadAsync 10038), initially suggesting a 5s gateway timeout during login.",
+        "possible_outcome": "AppTrace prelogin timing shows no connectivity slowdown; evidence suggests gateway chokes after LOGIN7 is sent and kills the connection instead of returning a redirect token.",
+        "id": "action_8_single_incident",
+        "node_label": "Correlate tdsproxy traces to validate gateway behavior"
+      },
+      {
+        "action_id": "action_9_single_incident",
+        "actor": "mkim",
+        "raw_action_string": "AuthLogin | where ClientConnectionId == '22222222-dddd-eeee-ffff-222222222222' | project TIMESTAMP, error, state",
+        "description": "What: KQL query against AuthLogin filtering by a specific ClientConnectionId GUID and projecting TIMESTAMP, error, and state.\nWhy/Purpose: Ran to confirm the connection rejection reason for a failing session tied to that ClientConnectionId.\nExpected outcome: Return the AuthLogin event(s) for that ClientConnectionId and reveal the associated error/state values explaining the rejection.\nActual findings/conclusions: Not explicitly stated in the text beyond the intent to confirm the rejection reason.\nImpact on troubleshooting: Provides direct evidence of the error/state for the specific failing client connection, supporting root-cause confirmation and correlation with other traces.",
+        "type": "kql_query",
+        "trigger_observation": "AppTrace prelogin timing shows no connectivity slowdown; evidence suggests gateway chokes after LOGIN7 is sent and kills the connection instead of returning a redirect token.",
+        "possible_outcome": "AuthLogin lookup was run to confirm the connection rejection reason for a failing session, but no output is captured in the transcript.",
+        "id": "action_9_single_incident",
+        "node_label": "Confirm rejection error and state for ClientConnectionId"
+      },
+      {
+        "action_id": "action_mitigation_0_single_incident",
+        "type": "mitigation",
+        "cause": "Gateway kills the connection after LOGIN7 is sent (instead of replying with a redirect token to the correct node), rather than a network/connectivity slowdown.",
+        "id": "action_mitigation_0_single_incident",
+        "node_label": "Fix gateway post-LOGIN7 redirect token handling"
+      }
+    ]
+  ]
+}

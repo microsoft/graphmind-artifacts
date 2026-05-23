@@ -1,0 +1,14 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Dynamically select a data column based on a header date, then check whether a given item exists in that column and return a default label if missing",
+        "Action: Use MATCH to find the header position, INDEX to return the corresponding column vector, then MATCH/ISNA inside IF to test existence",
+        "Observation: INDEX with row_num=0 returns an entire column from a 2D range; MATCH against that extracted column cleanly tests presence without hardcoding a column letter",
+        "Resolution: =IF(ISNA(MATCH([item],INDEX([data_table],0,MATCH([header_date],[header_row],0)),0)),\"NEW\",[item])"
+      ]
+    }
+  ],
+  "id": "1925"
+}

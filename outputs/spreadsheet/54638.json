@@ -1,0 +1,14 @@
+{
+  "domain": "array_formula",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Extract a de-duplicated list of unique text values from a single-column range into an adjacent column without dynamic arrays",
+        "Action: Use INDEX + MATCH to return the next unseen item, with COUNTIF to flag already-returned values and IFERROR to blank remaining rows (entered as a legacy array formula and filled down)",
+        "Observation: COUNTIF([output_so_far],[source_range]) produces a per-item occurrence count; matching the first 0 finds the next value not yet listed, enabling sequential unique extraction when copied down",
+        "Resolution: IFERROR(INDEX([source_range],MATCH(0,INDEX(COUNTIF([output_start]:[output_prev],[source_range]),0,0),0)),\"\")"
+      ]
+    }
+  ],
+  "id": "54638"
+}

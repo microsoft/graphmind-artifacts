@@ -1,0 +1,14 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return a related field (e.g., Name) for each ID in a filtered list, but only when the source row meets an additional condition (e.g., Result = Pass)",
+        "Action: Use INDEX to return the target column and MATCH to locate the row using a multi-criteria lookup by concatenating criteria arrays",
+        "Observation: Standard VLOOKUP fails when the lookup value is not in the first column of the lookup range and/or when the match must satisfy multiple conditions; concatenating lookup keys enables an exact multi-criteria match",
+        "Resolution: INDEX([return_range], MATCH([lookup_id]&[required_status], [id_range]&[status_range], 0))"
+      ]
+    }
+  ],
+  "id": "48608"
+}

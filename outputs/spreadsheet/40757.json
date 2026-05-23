@@ -1,0 +1,22 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Sum values for rows where a date field matches a target month name",
+        "Action: SUMPRODUCT with a boolean criteria array created by TEXT(date_range,\"MMMM\")=month_criteria",
+        "Observation: Converting dates to month names enables matching against a text month label; SUMPRODUCT multiplies the TRUE/FALSE mask by the numeric values to aggregate matching rows",
+        "Resolution: SUMPRODUCT((TEXT([date_range],\"MMMM\")=[month_name_cell])*[value_range])"
+      ]
+    },
+    {
+      "path": [
+        "Problem: Return a blank instead of 0 when an aggregated result has no matching/nonzero contribution",
+        "Action: Wrap the aggregation in IF(test=0,\"\",test)",
+        "Observation: When no rows match (or all matching values sum to zero), the aggregation returns 0; testing for 0 allows suppressing the displayed result",
+        "Resolution: IF([agg_formula]=0,\"\",[agg_formula])"
+      ]
+    }
+  ],
+  "id": "40757"
+}

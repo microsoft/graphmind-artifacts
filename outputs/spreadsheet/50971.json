@@ -1,0 +1,14 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return all related values from one column for each unique key in another column (spill into adjacent cells to form a row per key)",
+        "Action: FILTER to extract matching records, wrapped in TRANSPOSE to orient results horizontally",
+        "Observation: FILTER returns a vertical spill of all matches for a given key; TRANSPOSE converts that spill to a horizontal row aligned with the key list",
+        "Resolution: =TRANSPOSE(FILTER([return_range],[key_range]=[key_cell]))"
+      ]
+    }
+  ],
+  "id": "50971"
+}

@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Round numeric values to the nearest specified increment while forcing midpoint ties to round down",
+        "Action: Use MROUND with a small negative adjustment to bias tie-breaking downward",
+        "Observation: MROUND rounds to the nearest multiple; subtracting a tiny epsilon ensures exact midpoints fall just below the halfway threshold and therefore round down",
+        "Resolution: =MROUND([value]-[epsilon],[multiple])"
+      ]
+    }
+  ],
+  "id": "55260"
+}

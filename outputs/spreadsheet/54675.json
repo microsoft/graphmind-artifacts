@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Count rows meeting one criterion while matching a text value that may appear as a substring within a longer text cell",
+        "Action: Use COUNTIFS with wildcard text criteria concatenation",
+        "Observation: COUNTIFS supports wildcards (*, ?) in criteria, enabling 'contains' matching when the target text is wrapped with asterisks; additional criteria can be applied simultaneously",
+        "Resolution: =COUNTIFS([text_range],\"*\"&[target_text]&\"*\",[criteria_range],[criteria_value])"
+      ]
+    }
+  ],
+  "id": "54675"
+}

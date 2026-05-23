@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Generate a status/remarks label based on multiple business rules with priority (blank handling, prepaid detection, due/overdue aging buckets)",
+        "Action: Nested IF statements using structured references (or cell references) to evaluate conditions in priority order",
+        "Observation: Rule order matters; handle blanks first, then exceptional states (negative outstanding/prepaid, not-yet-due), then aging thresholds for overdue classification",
+        "Resolution: IF([OverdueDays]=\"\",\"\",IF([AmountOutstanding]<0,\"Prepaid\",IF([OverdueDays]<0,\"Not Due\",IF([OverdueDays]<[CallThresholdDays],\"Call Customer\",\"Bad Debts\"))))"
+      ]
+    }
+  ],
+  "id": "52541"
+}

@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Fill blank cells in one column with a corresponding value from another column",
+        "Action: Use IF to return the source cell value when present, otherwise return an error/placeholder",
+        "Observation: This works when each target row should mirror the value from the same-row source cell; blanks can be trapped with a conditional test",
+        "Resolution: =IF([source_cell]=\"\",[blank_result],[source_cell])"
+      ]
+    }
+  ],
+  "id": "34210"
+}

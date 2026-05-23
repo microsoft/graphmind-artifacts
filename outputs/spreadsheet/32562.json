@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Assign a running occurrence number to each value in a list (count how many times the current item has appeared up to the current row)",
+        "Action: Use COUNTIF with an expanding (mixed absolute/relative) range anchored at the first data row",
+        "Observation: An expanding range counts occurrences cumulatively; duplicates increment while first occurrences return 1",
+        "Resolution: =COUNTIF([start_cell]:[current_cell],[current_value_cell])"
+      ]
+    }
+  ],
+  "id": "32562"
+}

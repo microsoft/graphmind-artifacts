@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Compute a grand total of recurring savings where each saving starts in a given month and applies for the remaining fixed contract duration, then sum across multiple month columns",
+        "Action: SUMPRODUCT to multiply each month’s saving amount by a calculated remaining-months weight derived from the month number in the header (using RIGHT and numeric coercion)",
+        "Observation: When savings are entered in month-specific columns and the contract length is constant, each column can be weighted by (contract_months+1 - month_number) to include the saving within its starting month",
+        "Resolution: =SUMPRODUCT(--(([ContractMonths]+1)-RIGHT([MonthHeaderRange],2)),[SavingsRowRange])"
+      ]
+    }
+  ],
+  "id": "31746"
+}

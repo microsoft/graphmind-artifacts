@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Conditionally calculate a value based on a numeric threshold, with a blank-input safeguard",
+        "Action: Nested IF with an initial blank check and two calculation branches",
+        "Observation: Wrapping the main logic in a blank test prevents errors/undesired zeros when the driving input cell is empty",
+        "Resolution: =IF([hours_cell]=\"\",\"\",IF([hours_cell]<[threshold],[rate_cell]*[multiplier_if_below],[rate_cell]*[multiplier_if_at_or_above]))"
+      ]
+    }
+  ],
+  "id": "47933"
+}

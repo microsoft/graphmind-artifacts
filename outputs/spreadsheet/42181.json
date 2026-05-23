@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Sum values where a text field contains a target substring but excludes entries that also contain digits",
+        "Action: Use SUMIF with wildcard criteria and subtract a second SUMIF that matches the same substring preceded by any single character (digit) pattern",
+        "Observation: In SUMIF wildcards, '?' matches exactly one character; using '?*' before the substring can be used to capture cases where a digit appears immediately before the target text, enabling exclusion via subtraction",
+        "Resolution: =SUMIF([text_range],\"*\"&[target_text]&\"*\",[sum_range]) - SUMIF([text_range],\"?*\"&[target_text]&\"*\",[sum_range])"
+      ]
+    }
+  ],
+  "id": "42181"
+}

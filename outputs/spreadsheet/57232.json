@@ -1,0 +1,22 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Retrieve an intersecting value from a 2D table where the correct row is identified by multiple criteria and the correct column is chosen by a header match",
+        "Action: Use INDEX with a multi-criteria MATCH for the row and a header MATCH for the column (array multiplication of boolean tests)",
+        "Observation: Multiplying boolean arrays (TRUE/FALSE) coerces to 1/0, so MATCH(1, ...) finds the first row where all criteria are simultaneously met; a second MATCH selects among multiple value columns by matching the desired header/port",
+        "Resolution: INDEX([value_matrix], MATCH(1, ([criteria_range1]=[criteria1])*([criteria_range2]=[criteria2])*... , 0), MATCH([column_selector], [header_row], 0))"
+      ]
+    },
+    {
+      "path": [
+        "Problem: Return a safe result when no matching row/column exists (avoid #N/A)",
+        "Action: Wrap the lookup in IFERROR (or IFNA) to substitute a blank or custom message",
+        "Observation: Multi-criteria MATCH and header MATCH can fail independently; error handling prevents downstream formulas from breaking",
+        "Resolution: IFERROR(INDEX([value_matrix], MATCH(1, ([criteria_range1]=[criteria1])*([criteria_range2]=[criteria2])*..., 0), MATCH([column_selector], [header_row], 0)), [fallback_value])"
+      ]
+    }
+  ],
+  "id": "57232"
+}

@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Count the number of cells (typically blanks) between the first and second non-blank numeric entries in a row, with an override rule based on the first entry's value",
+        "Action: Use MATCH to locate the first non-blank, SMALL+IF to locate the second non-blank position, INDEX to retrieve the first value, and IF to apply the override condition",
+        "Observation: Converting qualifying cells to their column positions allows computing the gap as a simple difference between the 2nd and 1st occurrence indices; INDEX+MATCH enables testing the first found value before returning the gap",
+        "Resolution: IF(INDEX([row_range],MATCH(TRUE,[row_range]<>\"\",0))>[threshold], [override_value], SMALL(IF([row_range]<>\"\",COLUMN([col_index_range])),2)-MATCH(TRUE,[row_range]<>\"\",0))"
+      ]
+    }
+  ],
+  "id": "50521"
+}

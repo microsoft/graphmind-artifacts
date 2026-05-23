@@ -1,0 +1,14 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Retrieve a value from a source table by matching multiple criteria (e.g., Stock + Year) and return it into a target table",
+        "Action: Use SUMIFS to return the matching numeric value based on multiple criteria ranges",
+        "Observation: SUMIFS can act as a multi-criteria lookup when the source has at most one matching row per criteria combination; if no match exists it returns 0 (or blank if wrapped)",
+        "Resolution: =SUMIFS([return_range],[criteria_range1],[criteria1],[criteria_range2],[criteria2])"
+      ]
+    }
+  ],
+  "id": "5835"
+}

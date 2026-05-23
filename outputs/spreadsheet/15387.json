@@ -1,0 +1,14 @@
+{
+  "domain": "array_formula",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return a spill-down list of headers/items whose corresponding flag/value matches a user-specified criterion",
+        "Action: Array-filter matching columns with IF + COLUMN, rank matches with SMALL, return header with INDEX, suppress extra rows with COUNTIFS + ROWS inside IF",
+        "Observation: When the flags are in a single row aligned to header labels, matching columns can be converted to column numbers and retrieved in order; COUNTIFS limits output to the number of matches",
+        "Resolution: =IF(COUNTIFS([flag_row],[criteria_cell])<ROWS([output_anchor]:[current_output_cell]),\"\",INDEX([header_row],SMALL(IF([flag_row]=[criteria_cell],COLUMN([flag_row])),ROW([k]))))"
+      ]
+    }
+  ],
+  "id": "15387"
+}

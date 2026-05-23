@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Sum values across multiple columns for rows matching a selected month from a date field",
+        "Action: SUMPRODUCT with MONTH() criteria array multiplied by the numeric value range",
+        "Observation: Converting dates to month numbers enables month-based filtering without needing helper columns; SUMPRODUCT can aggregate across a 2D range when multiplied by a 1D boolean mask",
+        "Resolution: =SUMPRODUCT((MONTH([date_range])=MONTH([selected_date_cell]))*[value_2d_range])"
+      ]
+    }
+  ],
+  "id": "8942"
+}

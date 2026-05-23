@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Conditionally aggregate values by two criteria, but fall back to aggregating by one criterion when the two-criteria combination does not exist",
+        "Action: SUMIFS with dynamic criteria driven by IF + existence test using MATCH over an INDEX-produced array",
+        "Observation: Test whether any row satisfies (key1=target1)*(key2=target2); if none, switch the second SUMIFS criterion to a non-restrictive condition (e.g., \"<>\") so only the first criterion filters",
+        "Resolution: =SUMIFS([sum_range],[key1_range],[key1_value],[key2_range],IF(ISNUMBER(MATCH(1,INDEX(([key1_range]=[key1_value])*([key2_range]=[key2_value]),0),0)),[key2_value],\"<>\"))"
+      ]
+    }
+  ],
+  "id": "3413"
+}

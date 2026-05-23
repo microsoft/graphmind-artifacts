@@ -1,0 +1,14 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return a value (e.g., person name) by matching multiple criteria across separate columns in a lookup table",
+        "Action: INDEX + MATCH with a boolean array multiplication inside INDEX; wrap with IFERROR to return blank when no match",
+        "Observation: Converting multiple logical tests into 1/0 arrays and multiplying them yields 1 only where all criteria are met; MATCH can then find the first 1 and INDEX returns the corresponding value",
+        "Resolution: IFERROR(INDEX([return_range],MATCH(1,INDEX(([criteria_range1]=[criteria1])*([criteria_range2]=[criteria2]),0),0)),\"\")"
+      ]
+    }
+  ],
+  "id": "58032"
+}

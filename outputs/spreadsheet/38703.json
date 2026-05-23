@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Count unique values within a dynamically resetting group/segment of rows (restart count when a control field changes) and return the segment’s unique count at the segment end",
+        "Action: IF to only output at group boundary + find last reset/start row via LARGE(IF()) over change-detection + build segment range with INDEX + count distinct via SUM(1/COUNTIFS(range,range))",
+        "Observation: A new segment starts whenever the control column value differs from the previous row; the segment start can be derived as the most recent row where this change occurred, then used to define the current segment range for distinct counting",
+        "Resolution: =IF([control_cell]<>[next_control_cell],SUM(1/COUNTIFS(INDEX([value_col_start]:[value_col_current],LARGE(IF([control_prev_range]<>[control_curr_range],ROW([control_curr_range]),\"\"),1)):[value_cell_current],INDEX([value_col_start]:[value_col_current],LARGE(IF([control_prev_range]<>[control_curr_range],ROW([control_curr_range]),\"\"),1)):[value_cell_current])),\"\")"
+      ]
+    }
+  ],
+  "id": "38703"
+}

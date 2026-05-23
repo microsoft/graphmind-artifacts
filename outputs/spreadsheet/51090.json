@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Sum a numeric measure for rows that meet multiple filter criteria, including an OR condition across a list of allowed values",
+        "Action: SUMPRODUCT with boolean multiplication for AND criteria and boolean addition for OR criteria",
+        "Observation: In SUMPRODUCT, TRUE/FALSE arrays coerce to 1/0; multiplying arrays applies AND logic, while adding arrays applies OR logic across multiple allowed matches",
+        "Resolution: =SUMPRODUCT(([crit_range1]=[crit1])*([crit_range2]=[crit2])*([crit_range3]=[crit3])*((([or_range]=[or_val1])+([or_range]=[or_val2])+([or_range]=[or_val3])+([or_range]=[or_val4])>0)),[sum_range])"
+      ]
+    }
+  ],
+  "id": "51090"
+}

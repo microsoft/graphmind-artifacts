@@ -1,0 +1,14 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return a value from a 2D table using multiple row criteria and multiple column header criteria (two-way lookup with composite keys)",
+        "Action: Use INDEX with two MATCH functions where each MATCH finds the position of a row/column by multiplying boolean arrays for multiple criteria (array MATCH)",
+        "Observation: Multiple criteria can be combined into a single MATCH by multiplying TRUE/FALSE arrays and matching the result to 1; INDEX then uses the resulting row_num and column_num",
+        "Resolution: INDEX([data_2D_range], MATCH(1, ([row_crit1]=[row_header_range1])*([row_crit2]=[row_header_range2]), 0), MATCH(1, ([col_crit1]=[col_header_range1])*([col_crit2]=[col_header_range2]), 0))"
+      ]
+    }
+  ],
+  "id": "55468"
+}

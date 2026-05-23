@@ -1,0 +1,14 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Extract and list all records matching a criterion into a summary table (Excel version without FILTER)",
+        "Action: Use AGGREGATE to generate the k-th matching row index, then INDEX to return corresponding fields; wrap with IF + COUNTIF to stop after last match",
+        "Observation: AGGREGATE with SMALL (function 15) and option 6 ignores divide-by-zero errors created by non-matching rows, enabling an nth-match extractor without helper columns",
+        "Resolution: IF(ROW([k_cell])>COUNTIF([criteria_range],[criteria]),\"\",INDEX([return_table],AGGREGATE(15,6,ROW([criteria_range])/( [criteria_range]=[criteria] ),ROW([k_cell])),COLUMNS([first_output_cell]:[current_output_cell])))"
+      ]
+    }
+  ],
+  "id": "1818"
+}

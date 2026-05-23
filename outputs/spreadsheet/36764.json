@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Sum values in one column only for rows where a related column matches a given criterion",
+        "Action: Use SUMIF to apply a single-condition filter while summing a separate range",
+        "Observation: Works when the criteria range and sum range are aligned (same size/row order) so each match sums the corresponding value",
+        "Resolution: =SUMIF([criteria_range],[criteria],[sum_range])"
+      ]
+    }
+  ],
+  "id": "36764"
+}

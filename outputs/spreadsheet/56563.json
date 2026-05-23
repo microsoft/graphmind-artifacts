@@ -1,0 +1,14 @@
+{
+  "domain": "aggregation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Sum a numeric range while ignoring cells that contain error values",
+        "Action: Use SUM over an IF wrapper that replaces errors with blanks (array formula pattern) using ISERROR",
+        "Observation: SUM ignores text/blank values, so converting error cells to \"\" prevents errors from propagating and allows summation of remaining numbers",
+        "Resolution: =SUM(IF(ISERROR([range]),\"\",[range]))"
+      ]
+    }
+  ],
+  "id": "56563"
+}

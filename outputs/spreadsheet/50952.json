@@ -1,0 +1,14 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return a value from a table where a text field contains multiple required substrings (criteria) in any position with inconsistent delimiters",
+        "Action: Use SEARCH to test substring presence for each criterion, combine criteria via arithmetic, and use LOOKUP to return the last matching record",
+        "Observation: SEARCH returns a number when found and an error when not; dividing 1 by SEARCH coerces found/not-found into 1/error, and multiplying (or chaining divisions) creates an AND condition across multiple substrings; LOOKUP(2,...) ignores errors and selects the last numeric match",
+        "Resolution: LOOKUP(2,1/(SEARCH([criteria1],[text_range]))/(SEARCH([criteria2],[text_range])),[return_range])"
+      ]
+    }
+  ],
+  "id": "50952"
+}

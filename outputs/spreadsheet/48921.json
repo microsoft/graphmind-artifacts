@@ -1,0 +1,14 @@
+{
+  "domain": "text_manipulation",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Remove a fixed number of leading characters from a variable-length numeric code and return the remaining digits as a number",
+        "Action: Use LEN to get total length, subtract the number of leading characters to drop, then extract the remainder with RIGHT; coerce to number via *1 (or VALUE)",
+        "Observation: Works when the prefix length to remove is constant (e.g., always drop the first character) while the overall code length varies; RIGHT with LEN-based sizing adapts automatically",
+        "Resolution: =RIGHT([code_cell],LEN([code_cell])-[num_chars_to_remove])*1"
+      ]
+    }
+  ],
+  "id": "48921"
+}

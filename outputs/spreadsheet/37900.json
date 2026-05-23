@@ -1,0 +1,14 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return the value associated with the most recent date on or before a given/current date",
+        "Action: LOOKUP with approximate match against a sorted date column to fetch the corresponding value",
+        "Observation: LOOKUP returns the last value less than or equal to the lookup value when the lookup vector is sorted ascending; this enables 'as-of date' retrieval",
+        "Resolution: =LOOKUP([as_of_date],[date_range],[value_range])"
+      ]
+    }
+  ],
+  "id": "37900"
+}

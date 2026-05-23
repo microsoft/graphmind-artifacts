@@ -1,0 +1,14 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Calculate change from the most recent prior record within the same group/category (e.g., serial number) up to the current row",
+        "Action: Use LOOKUP with a boolean-to-numeric array (1/(criteria_range=criteria)) to return the last matching value in a growing range; wrap with IFERROR for first occurrence handling; subtract current value",
+        "Observation: LOOKUP(2, ...) returns the last numeric result in the lookup vector, so converting TRUE/FALSE to 1/error isolates matching rows and yields the most recent prior match when using an expanding range ending at the row above",
+        "Resolution: =IFERROR(LOOKUP(2,1/([criteria_range_start]:[criteria_cell_above]=[criteria_cell_current]),[value_range_start]:[value_cell_above]),[value_cell_current])-[value_cell_current]"
+      ]
+    }
+  ],
+  "id": "53167"
+}

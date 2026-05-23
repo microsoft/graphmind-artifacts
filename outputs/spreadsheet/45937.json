@@ -1,0 +1,14 @@
+{
+  "domain": "lookup_reference",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Return an intersecting value from a 2D legend table based on a row category and a column header",
+        "Action: INDEX with two MATCH functions (one for row lookup, one for column lookup)",
+        "Observation: Works when the output table is a matrix where rows are keyed by one field (e.g., kms band/category) and columns are keyed by another field (e.g., category code), and both keys can be matched exactly to headers/labels",
+        "Resolution: =INDEX([matrix_range], MATCH([row_key],[row_labels_range],0), MATCH([col_key],[col_headers_range],0))"
+      ]
+    }
+  ],
+  "id": "45937"
+}

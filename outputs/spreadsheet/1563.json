@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Fill blank cells in a column with the most recent non-blank value from above (forward-fill/down-fill)",
+        "Action: IF test for blank and reference prior result cell; otherwise use current source value",
+        "Observation: Using the previous output cell (not the previous input cell) allows blanks to inherit the last propagated non-blank value across multiple consecutive blanks",
+        "Resolution: =IF([current_source_cell]=\"\",[previous_output_cell],[current_source_cell])"
+      ]
+    }
+  ],
+  "id": "1563"
+}

@@ -1,0 +1,14 @@
+{
+  "domain": "conditional_logic",
+  "taxonomy": [
+    {
+      "path": [
+        "Problem: Count qualifying records within variable-length segments delimited by marker rows, and output the segment count only on marker rows",
+        "Action: IF to gate output + running COUNTIF for cumulative qualifying count + subtract prior segment totals via SUM of prior outputs",
+        "Observation: A cumulative count up to the current marker minus the sum of previously reported segment counts yields the count for the current segment; blanking non-marker rows prevents double-counting",
+        "Resolution: IF([marker_cell]=[marker_value], COUNTIF([data_start]:[data_current],[criteria]) - SUM([output_start]:[output_previous_row]), \"\")"
+      ]
+    }
+  ],
+  "id": "30930"
+}
