@@ -4,7 +4,7 @@ Reproducibility artifact for the CIKM 2026 submission:
 
 > *GraphMind: From Operational Traces to Self-Evolving Workflow Automation*
 
-This repository contains the **simplified/modified/redacted implementation of the offline workflow-extraction pipeline** described in Section 3 of the paper — the system that converts raw incident management tickets (ICMs), documentation, and structured logs into pruned, aligned **workflow graphs** that downstream agents can search and execute.
+This repository contains the **redacted implementation of the offline workflow-extraction pipeline** described in Section 3 of the paper — the system that converts raw incident management tickets (ICMs), documentation, and structured logs into pruned, aligned **workflow graphs** that downstream agents can search and execute.
 
 ## Pipeline overview
 
