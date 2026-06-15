@@ -126,6 +126,16 @@ workflow_graph = extract_workflow_graph_from_sample(record)
 - LLM outputs are non-deterministic; node counts and exact phrasings will vary between runs. The pipeline's structural invariants (every action appears in the chain, each action is preceded by a problem or observation, etc.) are enforced by the Workflow Extractor's retry loop (`prompts/10_taxonomy_retry.md`).
 - The pipeline is **stateless** at the incident level — there is no shared store across runs, so each incident produces an independent workflow_graph. Cross-incident merging is the Alignment Agent's job (paper §3.3) and is exercised in the notebook's final cells.
 
+## Synthetic Data Disclosure
+
+This repository contains **synthetic data** generated for research and development purposes.
+
+- The data in this repository does **not** correspond to real individuals, organizations, or events.
+- Any similarity to real-world entities is purely coincidental.
+- The dataset is designed to reflect the structure, patterns, or statistical properties of real data, but it does not contain actual production or user data.
+
+This synthetic data is provided to enable experimentation, benchmarking, and reproducible research while preserving privacy and avoiding the use of sensitive or proprietary information.
+
 ## License
 
 Community Data License Agreement — see [`LICENSE`](LICENSE).
